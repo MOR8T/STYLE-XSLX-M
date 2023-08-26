@@ -23852,6 +23852,7 @@ function readSync(data, opts) {
 }
 
 function readFileSync(filename, opts) {
+	console.log(filename)
 	var o = opts||{}; o.type = 'file';
 	return readSync(filename, o);
 }
@@ -24350,11 +24351,11 @@ function book_append_sheet(wb, ws, name, roll, nameSheet) {
 		const wsws = wb.Sheets[nameSheet]
 		const nws = {...ws}
 		Object.keys(ws).map((el) => {
-			if(typeof +el.split('')[el.length-1] == 'number'){
-				nws[el].s = {...wsws[el].s}
+			if(el[0] != '!' && wsws[el]?.s){
+				nws[el].s = wsws[el].s
 			}
 		})
-		console.log(nws['A1'],wsws['A1'],'-----------------------------/////////------------------')
+		console.log('nws',nws['A1'],'wsws',wsws['A1'],'wb',wb.Sheets[nameSheet]["A1"],'-----------------------------/////////------------------')
 		wb.Sheets[nameSheet] = nws;
 	}else{
 		wb.Sheets[name] = ws;
