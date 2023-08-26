@@ -32,7 +32,7 @@ Install browser:
 -   Over time, will be added new and customized features.
 
 
-## 🗒 What did I add
+## 🗒 What I added?
 -- 1 When you use read or readFile (second put type:'file') your file style-xlsx-m get cells style.
 
 ### read or readFile
@@ -43,8 +43,8 @@ const workbook = XLSX.readFile('./example.xlsx',{ cellStyles: true, bookVBA: tru
 
 // STEP 2
 let worksheet = [
-  "!col":[ { wpx: 10 }, { wpx: 15 }, { wpx:30 } ]
-  "!row":[ { hpx: 10 }, { hpx: 15 }, { hpx:30 } ]
+  "!col":[ { wpx: 10 }, { wpx: 15 }, { wpx:30 } ],
+  "!row":[ { hpx: 10 }, { hpx: 15 }, { hpx:30 } ],
   { v: "line\nbreak", t: "s" },
 	{ v: "Courier: 24", t: "s" },
 	{ v: 45, t: "n" },
@@ -57,18 +57,17 @@ XLSX.utils.book_append_sheet(workbook, worksheet, false, false, sheetname);
 // STEP 4
 XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
 ```
-
- -- Step 1:
+ - Step 1: 
  './excample.xlsx' - is a path to your excel file.
  Second property is a option { cellStyle: true } for get cells style (but now can't get in xls format).
 
- -- Step 2:
+ - Step 2: 
  Create data rows worksheet 
 
- -- Step 3:
+ - Step 3: 
  Get workbook data with style and set workbook.Sheets.sheetname to worksheet
 
- -- Step 4: 
+ - Step 4: 
  Save your file (xlsm and xls are format for save macros)
 
 
