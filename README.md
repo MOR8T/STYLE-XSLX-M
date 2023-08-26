@@ -31,6 +31,47 @@ Install browser:
 -   Current version of sheetjs used: **0.18.5**
 -   Over time, will be added new and customized features.
 
+
+## 🗒 What did I add
+-- 1 When you use read or readFile (second put type:'file') your file style-xlsx-m get cells style.
+
+### read or readFile
+
+```js
+// STEP 1
+const workbook = XLSX.readFile('./example.xlsx',{ cellStyles: true, bookVBA: true });
+
+// STEP 2
+let worksheet = [
+  "!col":[ { wpx: 10 }, { wpx: 15 }, { wpx:30 } ]
+  "!row":[ { hpx: 10 }, { hpx: 15 }, { hpx:30 } ]
+  { v: "line\nbreak", t: "s" },
+	{ v: "Courier: 24", t: "s" },
+	{ v: 45, t: "n" },
+	{ v: 2023, t: "n" },
+];
+
+// STEP 3
+XLSX.utils.book_append_sheet(workbook, worksheet, false, false, sheetname);
+
+// STEP 4
+XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
+```
+
+ -- Step 1:
+ './excample.xlsx' - is a path to your excel file.
+ Second property is a option { cellStyle: true } for get cells style (but now can't get in xls format).
+
+ -- Step 2:
+ Create data rows worksheet 
+
+ -- Step 3:
+ Get workbook data with style and set workbook.Sheets.sheetname to worksheet
+
+ -- Step 4: 
+ Save your file (xlsm and xls are format for save macros)
+
+
 ## 🗒 Style API
 -- Method to export file in excel with style get from [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style) (only function writeFile)
 
