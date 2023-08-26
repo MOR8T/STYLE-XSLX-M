@@ -1,8 +1,8 @@
 {
 	"name": "style-xlsx-m",
-	"version": "0.1.7",
-	"author": "mor8t",
-	"description": "SheetJS and with Style! Get and Export Excel with basic styling options using JavaScript. But only get in xlsx and xlsm format.",
+	"version": "0.1.8",
+	"author": "mor8t (Shahrom)",
+	"description": "style-xlsx-m is a custom XLSX (SheetJs) library with styling (xlsx-js-style)",
 	"keywords": [
 		"excel",
 		"xls",
@@ -15,7 +15,8 @@
 		"dif",
 		"sylk",
 		"office",
-		"spreadsheet"
+		"spreadsheet",
+		"style"
 	],
 	"bin": {
 		"xlsx": "./bin/xlsx.njs"
