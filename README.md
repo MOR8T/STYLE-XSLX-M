@@ -2,14 +2,8 @@
 
 ## ℹ️ About
 
-style-xlsx-m is a custom [XLSX](https://www.npmjs.com/package/xlsx) (SheetJs) library with styling from [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style)
+Style-xlsx-m is a custom [XLSX](https://www.npmjs.com/package/xlsx) (SheetJs) version library with styling from [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style)
 
-<p align="center">
-  <a href="https://github.com/gitbrent/xlsx-js-style/">
-    <img alt="style-xlsx-m sheetjs styles" title="style-xlsx-m sheetjs styles" src="https://github.com/gitbrent/xlsx-js-style/blob/7664a045cd8f96b6b1b92ad563babebb8d6e0b4a/demos/browser/images/readme_banner.png"/>
-  </a>
-</p>
-<br/>
 
 ## 🔌 Installation
 
@@ -35,10 +29,10 @@ Install browser:
 
 -   Refer to the [SheetJS](https://sheetjs.com/) documentation for core API reference
 -   Current version of sheetjs used: **0.18.5**
--   Over time, new or customized features will be added.
+-   Over time, will be added new and customized features.
 
 ## 🗒 Style API
--- Method to save styles in excel ( writeFile ) get from [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style)
+-- Method to export file in excel with style get from [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style) (only function writeFile)
 
 ### Cell Style Example
 
@@ -133,12 +127,15 @@ Borders for merged areas are specified for each cell within the merged area. For
 
 ## 🙏 Thanks
 
-This project is a fork of [SheetJS/sheetjs](https://github.com/sheetjs/sheetjs) combined with code from
+This project is a fork of [SheetJS/sheetjs](https://github.com/sheetjs/sheetjs) combined with code and documentation from
 [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style) (by [brentely](https://www.npmjs.com/~brentely)).
 
 All projects are under the Apache 2.0 License
 
 -   [sheetjs](https://github.com/SheetJS/sheetjs)
+-   [js-xlsx](https://github.com/protobi/js-xlsx)
+-   [sheetjs-style](https://www.npmjs.com/package/sheetjs-style)
+-   [sheetjs-style-v2](https://www.npmjs.com/package/sheetjs-style-v2)
 -   [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style)
 
 ## 🔖 License

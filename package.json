@@ -1,6 +1,6 @@
 {
 	"name": "style-xlsx-m",
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"author": "mor8t (Shahrom)",
 	"description": "style-xlsx-m is a custom XLSX (SheetJs) library with styling (xlsx-js-style)",
 	"keywords": [
