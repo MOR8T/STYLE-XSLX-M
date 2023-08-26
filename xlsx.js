@@ -10151,35 +10151,28 @@ function parse_borders(t, styles, themes, opts) {
 			/* 18.8.? color CT_Color */case '<color':
 			if(!color) color = {};
 			if(y.auto) color.auto = parsexmlbool(y.auto);
-
-				if(y.rgb){ color.rgb = y.rgb.slice(-6);}
-				else if(y.indexed) {
-					color.index = parseInt(y.indexed, 10);
-					var icv = XLSIcv[color.index];
-					if(color.index == 81) icv = XLSIcv[1];
-					if(!icv) icv = XLSIcv[1]; //throw new Error(x); // note: 206 is valid
-					color.rgb = icv[0].toString(16) + icv[1].toString(16) + icv[2].toString(16);
-				} else if(y.theme) {
-					color = {}
-					color.theme = parseInt(y.theme, 10);
-					if(y.tint) color.tint = parseFloat(y.tint);
-					if(y.theme && themes.themeElements && themes.themeElements.clrScheme) {
-						color.rgb = rgb_tint(themes.themeElements.clrScheme[color.theme].rgb, color.tint || 0);
-					}
+			if(y.rgb){ color.rgb = y.rgb.slice(-6);}
+			else if(y.indexed) {
+				color.index = parseInt(y.indexed, 10);
+				var icv = XLSIcv[color.index];
+				if(color.index == 81) icv = XLSIcv[1];
+				if(!icv) icv = XLSIcv[1]; //throw new Error(x); // note: 206 is valid
+				color.rgb = icv[0].toString(16) + icv[1].toString(16) + icv[2].toString(16);
+			} else if(y.theme) {
+				color = {}
+				color.theme = parseInt(y.theme, 10);
+				if(y.tint) color.tint = parseFloat(y.tint);
+				if(y.theme && themes.themeElements && themes.themeElements.clrScheme) {
+					color.rgb = rgb_tint(themes.themeElements.clrScheme[color.theme].rgb, color.tint || 0);
 				}
-				// console.log(color)
-				if(color.index && color.rgb && !color.theme){
-					if(color.index == 64){
-						color = {rgb:'000'}
-					}else{
-						color = {rgb:color.rgb}
-					}
-				}else if(!color.index && color.rgb && color.theme){
-					color = {rgb:color.rgb}
-				}else{
-					color = {index:color.index}
-				}
-				break;
+			}
+			if(color.index && color.rgb && !color.theme){
+				if(color.index == 64) color = {rgb:'000'}
+				else color = {rgb:color.rgb}
+			}
+			else if(!color.index && color.rgb && color.theme) color = {rgb:color.rgb};
+			else color = {index:color.index};
+			break;
 			case '<color/>': case '</color>': break;
 
 			/* 18.2.10 extLst CT_ExtensionList ? */
@@ -14532,18 +14525,11 @@ function safe_format(p, fmtid, fillid, opts, themes, styles, fontid, borderid,cf
 	} catch(e) { if(opts.WTF) throw e; }
 	if(!opts.cellStyles) return;
 	// if(fillid != null) try {
-	// 	// p.s = {
-	// 	// 	...styles.Fills[fillid],
-	// 	// };
-	// 	// console.log('p style',p)
-	// 	// const styles = {}
-	// 	// console.log(styles.Fills[fillid])
+	// 	// p.s = {...styles.Fills[fillid]};
 	// 	const pss = {...styles.Fills[fillid]}
 	// 	if (pss.fgColor && pss.fgColor.theme && !pss.fgColor.rgb) {
 	// 		p.s.fgColor.rgb = rgb_tint(themes.themeElements.clrScheme[pss.fgColor.theme].rgb, pss.fgColor.tint || 0);
 	// 		if(opts.WTF) p.s.fgColor.raw_rgb = themes.themeElements.clrScheme[pss.fgColor.theme].rgb;
-	// 		const bg = { rgb: pss.fgColor.rgb };
-	// 		p.s.fill = {...pss.fill, fgColor: bg, bgColor: bg };
 	// 	}
 	// 	if (pss.bgColor && (pss.bgColor.theme || pss.bgColor.theme == 0)) {
 	// 		p.s.Fills[fillid].bgColor.rgb = rgb_tint(themes.themeElements.clrScheme[pss.bgColor.theme].rgb, pss.bgColor.tint || 0);
@@ -14552,74 +14538,28 @@ function safe_format(p, fmtid, fillid, opts, themes, styles, fontid, borderid,cf
 	// 	if(pss.patternType){
 	// 		if(pss.fgColor.rgb){
 	// 			const bg = { rgb: pss.fgColor.rgb };
-	// 			p.s.fill = {
-	// 				fgColor: bg, 
-	// 				bgColor: bg ,
+	// 			p.s.fill = {fgColor: bg, bgColor: bg ,
 	// 				patternType: pss.patternType == 'solid' ? 'solid' : 'none',
 	// 			}
 	// 		}else {
-	// 			p.s.fill = {
-	// 				patternType: pss.patternType == 'solid' ? 'solid' : 'none',
-	// 			}
+	// 			p.s.fill = {patternType: pss.patternType == 'solid' ? 'solid' : 'none',}
 	// 		}
 	// 	}
 	// } catch(e) { if(opts.WTF && styles.Fills) throw e; }
 	if(fontid != null){
-		p.s = {
-			...p.s,
-			...styles.Fonts[fontid],
-		}
-        if (p.s.sz) {
-          p.s.font = { ...p.s.font, sz: p.s.sz };
-        }
-        if (p.s.color) {
-            p.s.font = {
-              ...p.s.font,
-              color: p.s.color,
-            };
-        }
-        if (p.s.underline) {
-            p.s.font = {
-              ...p.s.font,
-              underline: p.s.underline ? true : false,
-            };
-          }
-        if (p.s.strike) {
-            p.s.font = {
-              ...p.s.font,
-              strike: p.s.strike ? true : false,
-            };
-        }
-        if (p.s.bold) {
-            p.s.font = {
-              ...p.s.font,
-              bold: p.s.bold ? true : false,
-            };
-        }
-        if (p.s.italic) {
-            p.s.font = {
-              ...p.s.font,
-              italic: p.s.italic ? true : false,
-            };
-        }
-        if (p.s.name) {
-            p.s.font = {
-              ...p.s.font,
-              name: p.s.name,
-            };
-        }
+		p.s = {...p.s,...styles.Fonts[fontid],}
+        if (p.s.sz) p.s.font = { ...p.s.font, sz: p.s.sz };
+        if (p.s.color) p.s.font = {...p.s.font, color: p.s.color,};
+        if (p.s.underline) p.s.font = { ...p.s.font, underline: p.s.underline ? true : false,};
+        if (p.s.strike) p.s.font = { ...p.s.font, strike: p.s.strike ? true : false, };
+        if (p.s.bold) p.s.font = { ...p.s.font, bold: p.s.bold ? true : false, };
+        if (p.s.italic) p.s.font = { ...p.s.font, italic: p.s.italic ? true : false, };
+        if (p.s.name) p.s.font = { ...p.s.font, name: p.s.name, };
 	}
-	if(borderid != null){
-		p.s.border = styles.Borders[borderid]
-	}
-	if(cf.alignment){
-		p.s = {
-			...p.s,
-			alignment:cf.alignment
-		}
-	}
+	if(borderid != null) p.s.border = styles.Borders[borderid]
+	if(cf.alignment) p.s = {...p.s, alignment:cf.alignment}
 	if(p.s && p.t == 'z'){
-		p.t = 's'
+		p.t = 's';
 		// p.z = 'General'
 		p.v = ' '
 		p.w = ' '
@@ -14948,29 +14888,6 @@ var parse_ws_xml_data = (function() {
 	var refregex = /ref=["']([^"']*)["']/;
 	var match_v = matchtag("v"), match_f = matchtag("f");
 
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
-	//00000000000000000000000000000000000000000000000000000000000000000000000000000000
 return function parse_ws_xml_data(sdata, s, opts, guess, themes, styles) {
 	// console.log('1111111111111111111111111111111111111111111111111111111111111111111111111111111111111')
 	var ri = 0, x = "", cells = [], cref = [], idx=0, i=0, cc=0, d="", p;
@@ -23451,30 +23368,6 @@ function parse_zip(zip, opts) {
 		Themes: themes,
 		SSF: dup(table_fmt)
 	});
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	if(opts && opts.bookFiles) {
 		if(zip.files) {
 			out.keys = entries;
@@ -24438,7 +24331,8 @@ function book_new() {
 }
 
 /* add a worksheet to the end of a given workbook */
-function book_append_sheet(wb, ws, name, roll) {
+function book_append_sheet(wb, ws, name, roll, nameSheet) {
+	console.log('book_append_sheet')
 	var i = 1;
 	if(!name) for(; i <= 0xFFFF; ++i, name = undefined) if(wb.SheetNames.indexOf(name = "Sheet" + i) == -1) break;
 	if(!name || wb.SheetNames.length >= 0xFFFF) throw new Error("Too many worksheets");
@@ -24452,7 +24346,21 @@ function book_append_sheet(wb, ws, name, roll) {
 	if(wb.SheetNames.indexOf(name) >= 0) throw new Error("Worksheet with name |" + name + "| already exists!");
 
 	wb.SheetNames.push(name);
-	wb.Sheets[name] = ws;
+	if(nameSheet && typeof nameSheet == 'string'){
+		const wsws = wb.Sheets[nameSheet]
+		const nws = {...ws}
+		Object.keys(ws).map((el) => {
+			if(typeof +el.split('')[el.length-1] == 'number'){
+				nws[el].s = {...wsws[el].s}
+			}
+		})
+		console.log(nws['A1'],wsws['A1'],'-----------------------------/////////------------------')
+		wb.Sheets[nameSheet] = nws;
+	}else{
+		wb.Sheets[name] = ws;
+	}
+	// console.log(ws)
+	// console.log('name',name,'name 2',Object.keys(wb.Sheets)[0])
 	return name;
 }
 
