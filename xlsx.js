@@ -23852,7 +23852,7 @@ function readSync(data, opts) {
 }
 
 function readFileSync(filename, opts) {
-	console.log(filename)
+	// console.log(filename)
 	var o = opts||{}; o.type = 'file';
 	return readSync(filename, o);
 }
@@ -24333,7 +24333,7 @@ function book_new() {
 
 /* add a worksheet to the end of a given workbook */
 function book_append_sheet(wb, ws, name, roll, nameSheet) {
-	console.log('book_append_sheet')
+	// console.log('book_append_sheet')
 	var i = 1;
 	if(!name) for(; i <= 0xFFFF; ++i, name = undefined) if(wb.SheetNames.indexOf(name = "Sheet" + i) == -1) break;
 	if(!name || wb.SheetNames.length >= 0xFFFF) throw new Error("Too many worksheets");
@@ -24355,7 +24355,7 @@ function book_append_sheet(wb, ws, name, roll, nameSheet) {
 				nws[el].s = wsws[el].s
 			}
 		})
-		console.log('nws',nws['A1'],'wsws',wsws['A1'],'wb',wb.Sheets[nameSheet]["A1"],'-----------------------------/////////------------------')
+		// console.log('nws',nws['A1'],'wsws',wsws['A1'],'wb',wb.Sheets[nameSheet]["A1"],'-----------------------------/////////------------------')
 		wb.Sheets[nameSheet] = nws;
 	}else{
 		wb.Sheets[name] = ws;

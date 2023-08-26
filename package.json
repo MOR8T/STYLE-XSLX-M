@@ -1,6 +1,6 @@
 {
 	"name": "style-xlsx-m",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"author": "mor8t",
 	"description": "SheetJS and with Style! Get and Export Excel with basic styling options using JavaScript. But only get in xlsx and xlsm format.",
 	"keywords": [
