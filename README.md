@@ -2,7 +2,7 @@
 
 ## ℹ️ About
 
-SheetJS and with Style! Get and Export Excel with basic styling options using JavaScript. But only get in xlsx and xlsm format.
+SheetJS and with Style! Get and Export Excel with basic styling options using JavaScript. But only get in xlsx and xlsm format. (this is now a beta version)
 
 <p align="center">
   <a href="https://github.com/gitbrent/xlsx-js-style/">
