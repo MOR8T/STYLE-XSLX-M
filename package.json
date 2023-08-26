@@ -2,7 +2,7 @@
 	"name": "style-xlsx-m",
 	"version": "0.1.0",
 	"author": "mor8t",
-	"description": "SheetJS with Style! Get and Export Excel with basic styling options using JavaScript.",
+	"description": "SheetJS and with Style! Get and Export Excel with basic styling options using JavaScript. But only get in xlsx and xlsm format.",
 	"keywords": [
 		"excel",
 		"xls",
@@ -90,9 +90,9 @@
 			"holes"
 		]
 	},
-	"homepage": "https://sheetjs.com/",
+	"homepage": "https://github.com/MOR8T/STYLE-XSLX-M",
 	"bugs": {
-		"url": "https://github.com/SheetJS/sheetjs/issues"
+		"url": "https://github.com/MOR8T/STYLE-XSLX-M"
 	},
 	"license": "Apache-2.0",
 	"engines": {
