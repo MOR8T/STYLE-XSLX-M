@@ -83,11 +83,13 @@ XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
  }
 
  // Aligment
- A1.s.aligment = {
-    vertical: 'bottom', // "top" or "center" or "bottom"
-    horizontal : 'left', // "left" or "center" or "right"
-    wrapText: false, // true or false
-    textRotation: 0 // 0 to 180, or 255 // 180 is rotated down 180 degrees, 255 is special, aligned vertically
+ A1.s = {
+       aligment: {
+       vertical: 'bottom', // "top" or "center" or "bottom"
+       horizontal : 'left', // "left" or "center" or "right"
+       wrapText: false, // true or false
+       textRotation: 0 // 0 to 180, or 255 // 180 is rotated down 180 degrees, 255 is special, aligned vertically
+    }
  }
 
  const border = { 
