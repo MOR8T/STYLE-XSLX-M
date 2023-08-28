@@ -65,6 +65,7 @@ XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
 ## 🗒 Style API
 -- Method to export file in excel with style get from [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style) (only function writeFile)
 
+
 ### Cell Style JSON structure
 
 -   Cell styles are specified by a style object that roughly parallels the OpenXML structure.
@@ -156,7 +157,6 @@ XLSX.utils.book_append_sheet(wb, ws, "readme demo");
 // STEP 4: Write Excel file to browser
 XLSX.writeFile(wb, "xlsx-js-style-demo.xlsx");
 ```
-
 <!-- | Style Prop  | Sub Prop       | Default     | Description/Values                                                                                |
 | :---------- | :------------- | :---------- | ------------------------------------------------------------------------------------------------- |
 | `alignment` | `vertical`     | `bottom`    | `"top"` or `"center"` or `"bottom"`                                                               |
@@ -185,6 +185,7 @@ XLSX.writeFile(wb, "xlsx-js-style-demo.xlsx");
 |             |                |             | Ex: `"0.00%;\\(0.00%\\);\\-;@"` // string specifying a custom format, escaping special characters |
 |             |                |             | Ex: `"m/dd/yy"` // string a date format using Excel's format notation                             | -->
 
+
 ### `COLOR_STYLE` {object} Properties
 
 Colors for `border`, `fill`, `font` are specified as an name/value object - use one of the following:
@@ -203,12 +204,12 @@ Colors for `border`, `fill`, `font` are specified as an name/value object - use 
     tint: 0.4 // ("Blue, Accent 1, Lighter 40%")
  } 
 ```
-
 <!-- | Color Prop | Description       | Example                                                         |
 | :--------- | ----------------- | --------------------------------------------------------------- |
 | `rgb`      | hex RGB value     | `{rgb: "FFCC00"}`                                               |
 | `theme`    | theme color index | `{theme: 4}` // (0-n) // Theme color index 4 ("Blue, Accent 1") |
 | `tint`     | tint by percent   | `{theme: 1, tint: 0.4}` // ("Blue, Accent 1, Lighter 40%")      | -->
+
 
 ### `BORDER_STYLE` {string} Properties
 
@@ -216,14 +217,11 @@ Border style property is one of the following values:
 
 `dashDotDot`, `dashDot`, `dashed`, `dotted`, `hair`, `mediumDashDotDot`, `mediumDashDot`, `mediumDashed`, `medium`, `slantDashDot`, `thick`, `thin`
 
-**Border Notes**
 
-Borders for merged areas are specified for each cell within the merged area. For example, to apply a box border to a merged area of 3x3 cells, border styles would need to be specified for eight different cells:
-
--   left borders (for the three cells on the left)
--   right borders (for the cells on the right)
--   top borders (for the cells on the top)
--   bottom borders (for the cells on the left)
+## 🗒 TODO
+- optimize the project
+- add new features for tasks and libraries (for example: spreadsheet)
+- (If you have any ideas and/or suggestions write in my [email](hp.sh.shahrom@gmail.com) or [github](https://github.com/MOR8T))
 
 ## 🙏 Thanks
 
