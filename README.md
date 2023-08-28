@@ -38,37 +38,28 @@ Install browser:
 ### read or readFile
 
 ```js
-// STEP 1
+// STEP 1 
+// './excample.xlsx' - is a path to your excel file.
+// Second property is a option { cellStyle: true } for get cells style (but now can't get in xls format).
 const workbook = XLSX.readFile('./example.xlsx',{ cellStyles: true, bookVBA: true });
 
-// STEP 2
+// STEP 2 Create data rows worksheet 
 let worksheet = [
   "!col":[ { wpx: 10 }, { wpx: 15 }, { wpx:30 } ],
   "!row":[ { hpx: 10 }, { hpx: 15 }, { hpx:30 } ],
   { v: "line\nbreak", t: "s" },
-	{ v: "Courier: 24", t: "s" },
-	{ v: 45, t: "n" },
-	{ v: 2023, t: "n" },
+  { v: "Courier: 24", t: "s" },
+  { v: 45, t: "n" },
+  { v: 2023, t: "n" },
 ];
 
-// STEP 3
+// STEP 3 Get workbook data with style and set workbook.Sheets.sheetname to worksheet
 XLSX.utils.book_append_sheet(workbook, worksheet, false, false, sheetname);
 
-// STEP 4
+// STEP 4 Save your file with style (but don't save style in xls format)
 XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
 ```
- - Step 1: 
- './excample.xlsx' - is a path to your excel file.
- Second property is a option { cellStyle: true } for get cells style (but now can't get in xls format).
-
- - Step 2: 
- Create data rows worksheet 
-
- - Step 3: 
- Get workbook data with style and set workbook.Sheets.sheetname to worksheet
-
- - Step 4: 
- Save your file (xlsm and xls are format for save macros)
+ This example shows how you can change the contents of a file without removing its old style.
 
 
 ## 🗒 Style API
@@ -96,12 +87,76 @@ XLSX.utils.book_append_sheet(wb, ws, "readme demo");
 XLSX.writeFile(wb, "xlsx-js-style-demo.xlsx");
 ```
 
-### Cell Style Properties
+### Cell Style JSON structure
 
 -   Cell styles are specified by a style object that roughly parallels the OpenXML structure.
 -   Style properties currently supported are: `alignment`, `border`, `fill`, `font`, `numFmt`.
 
-| Style Prop  | Sub Prop       | Default     | Description/Values                                                                                |
+
+```js
+
+ const A1 = { v: "line\nbreak", t: "s" } // key s is a style key for your cell
+
+ const BORDER_STYLE = 'think'
+
+ const COLOR_STYLE = {
+    rgb: 'FF0000'
+ }
+
+ // Aligment
+ A1.s.aligment = {
+    vertical: 'bottom', // "top" or "center" or "bottom"
+    horizontal : 'left', // "left" or "center" or "right"
+    wrapText: false, // true or false
+    textRotation: 0 // 0 to 180, or 255 // 180 is rotated down 180 degrees, 255 is special, aligned vertically
+ }
+
+ const border = { 
+    style: BORDER_STYLE, 
+    color: COLOR_STYLE,
+ }
+
+ // Border
+ A1.s = {
+    border: {
+        top: border, 
+        bottom: border,
+        left: border,
+        right: border,
+        diagonal: { 
+            style: BORDER_STYLE, 
+            color: COLOR_STYLE, 
+            diagonalUp: false, // true or false
+            diagonalDown: true/false // true or false
+        }
+    }
+ }
+
+ // Font
+ A1.s = {
+    font: {
+        color: COLOR_STYLE,
+        name: 'Calibri', // font name
+        sz: '11', // font size (points)
+        vertAlign: '', //  	"superscript" or "subscript"
+        bold: false, // true or false
+        italic: true, // true or false
+        strike: false, // true or false
+        underline: false, // true or false
+    }
+ }
+
+ // Fill 
+ A1.s = {
+    fill: {
+        patternType: 'none', // 'none' or 'solid'
+        fgColor: COLOR_STYLE,
+    }
+ }
+
+```
+
+<!-- | Style Prop  | Sub Prop       | Default     | Description/Values                                                                                |
 | :---------- | :------------- | :---------- | ------------------------------------------------------------------------------------------------- |
 | `alignment` | `vertical`     | `bottom`    | `"top"` or `"center"` or `"bottom"`                                                               |
 |             | `horizontal`   | `left`      | `"left"` or `"center"` or `"right"`                                                               |
@@ -127,11 +182,28 @@ XLSX.writeFile(wb, "xlsx-js-style-demo.xlsx");
 |             |                |             | Ex: `"0.00%"` // string matching a built-in format, see StyleBuilder.SSF                          |
 |             |                |             | Ex: `"0.0%"` // string specifying a custom format                                                 |
 |             |                |             | Ex: `"0.00%;\\(0.00%\\);\\-;@"` // string specifying a custom format, escaping special characters |
-|             |                |             | Ex: `"m/dd/yy"` // string a date format using Excel's format notation                             |
+|             |                |             | Ex: `"m/dd/yy"` // string a date format using Excel's format notation                             | -->
 
 ### `COLOR_STYLE` {object} Properties
 
 Colors for `border`, `fill`, `font` are specified as an name/value object - use one of the following:
+`rgb key doesn't mean it's rgb format it's a hek format`.
+
+```js
+ // JSON structure
+ const rgb = {
+    rgb: 'FFCC00'
+ }
+
+ const theme = {
+    theme: 4 // (0-n) // Theme color index 4 ("Blue, Accent 1")
+ }
+
+ const tint = {
+    theme: 1, 
+    tint: 0.4
+ } // ("Blue, Accent 1, Lighter 40%")
+```
 
 | Color Prop | Description       | Example                                                         |
 | :--------- | ----------------- | --------------------------------------------------------------- |
@@ -143,18 +215,7 @@ Colors for `border`, `fill`, `font` are specified as an name/value object - use 
 
 Border style property is one of the following values:
 
--   `dashDotDot`
--   `dashDot`
--   `dashed`
--   `dotted`
--   `hair`
--   `mediumDashDotDot`
--   `mediumDashDot`
--   `mediumDashed`
--   `medium`
--   `slantDashDot`
--   `thick`
--   `thin`
+`dashDotDot`, `dashDot`, `dashed`, `dotted`, `hair`, `mediumDashDotDot`, `mediumDashDot`, `mediumDashed`, `medium`, `slantDashDot`, `thick`, `thin`
 
 **Border Notes**
 
@@ -170,15 +231,8 @@ Borders for merged areas are specified for each cell within the merged area. For
 This project is a fork of [SheetJS/sheetjs](https://github.com/sheetjs/sheetjs) combined with code and documentation from
 [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style) (by [brentely](https://www.npmjs.com/~brentely)).
 
-All projects are under the Apache 2.0 License
-
--   [sheetjs](https://github.com/SheetJS/sheetjs)
--   [js-xlsx](https://github.com/protobi/js-xlsx)
--   [sheetjs-style](https://www.npmjs.com/package/sheetjs-style)
--   [sheetjs-style-v2](https://www.npmjs.com/package/sheetjs-style-v2)
--   [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style)
 
 ## 🔖 License
 
-Please consult the attached [LICENSE](https://github.com/MOR8T/STYLE-XSLX-M/main/LICENSE) file for details. All rights not explicitly
+Please consult the attached [LICENSE](https://github.com/MOR8T/STYLE-XSLX-M/blob/main/LICENSE) file for details. All rights not explicitly
 granted by the Apache 2.0 License are reserved by the Original Author.

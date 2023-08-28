@@ -1,8 +1,8 @@
 {
 	"name": "style-xlsx-m",
-	"version": "0.1.11",
-	"author": "mor8t (Shahrom)",
-	"description": "style-xlsx-m is a custom XLSX (SheetJs) library with styling (xlsx-js-style)",
+	"version": "0.1.12",
+	"author": "mor8t (Shukurov Shahrom)",
+	"description": "style-xlsx-m is a custom xlsx and xlsx-js-style version library",
 	"keywords": [
 		"excel",
 		"xls",
@@ -95,7 +95,7 @@
 	"bugs": {
 		"url": "https://github.com/MOR8T/STYLE-XSLX-M"
 	},
-	"license": "Apache-2.0",
+	"license": "Apache-1.0",
 	"engines": {
 		"node": ">=0.8"
 	}
