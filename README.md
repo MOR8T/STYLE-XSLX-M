@@ -221,7 +221,7 @@ Border style property is one of the following values:
 ## 🗒 TODO
 - optimize the project
 - add new features for tasks and libraries (for example: spreadsheet)
-- (If you have any ideas and/or suggestions write in my [email](hp.sh.shahrom@gmail.com) or [github](https://github.com/MOR8T))
+- If you have any ideas and/or suggestions write in my email (hp.sh.shahrom@gmail.com) or [github](https://github.com/MOR8T)
 
 ## 🙏 Thanks
 
