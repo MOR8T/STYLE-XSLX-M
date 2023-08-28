@@ -33,7 +33,7 @@ Install browser:
 
 
 ## 🗒 What I added?
--- 1 When you use read or readFile (second put type:'file') your file style-xlsx-m get cells style.
+-- When you use read (second property put {type:'file'}) or readFile your file get cells style.
 
 ### read or readFile
 
@@ -74,7 +74,7 @@ XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
 
 ```js
 
- const A1 = { v: "line\nbreak", t: "s" } // key s is a style key for your cell
+ const A1 = { v: "line\nbreak", t: "s", s:{} } // key s is a style key for your cell
 
  const BORDER_STYLE = 'think'
 
