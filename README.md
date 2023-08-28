@@ -41,7 +41,7 @@ Install browser:
 // STEP 1 
 // './excample.xlsx' - is a path to your excel file.
 // Second property is a option { cellStyle: true } for get cells style (but now can't get in xls format).
-const workbook = XLSX.readFile('./example.xlsx',{ cellStyles: true, bookVBA: true });
+const workbook = XLSX.readFile('./example.xlsx',{ cellStyles: true });
 
 // STEP 2 Create data rows worksheet 
 let worksheet = [
@@ -56,7 +56,7 @@ let worksheet = [
 // STEP 3 Get workbook data with style and set workbook.Sheets.sheetname to worksheet
 XLSX.utils.book_append_sheet(workbook, worksheet, false, false, sheetname);
 
-// STEP 4 Save your file with style (but don't save style in xls format)
+// STEP 4 Save your file with style
 XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
 ```
  This example shows how you can change the contents of a file without removing its old style.
@@ -65,32 +65,10 @@ XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
 ## 🗒 Style API
 -- Method to export file in excel with style get from [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style) (only function writeFile)
 
-### Cell Style Example
-
-```js
-// STEP 1: Create a new workbook
-const wb = XLSX.utils.book_new();
-
-// STEP 2: Create data rows and styles
-let row = [
-  { v: "line\nbreak", t: "s", s: { alignment: { wrapText: true } } },
-	{ v: "Courier: 24", t: "s", s: { font: { name: "Courier", sz: 24 } } },
-	{ v: "fill: color", t: "s", s: { fill: { fgColor: { rgb: "E9E9E9" } } } },
-	{ v: "bold & color", t: "s", s: { font: { bold: true, color: { rgb: "FF0000" } } } },
-];
-
-// STEP 3: Create worksheet with rows; Add worksheet to workbook
-const ws = XLSX.utils.aoa_to_sheet([row]);
-XLSX.utils.book_append_sheet(wb, ws, "readme demo");
-
-// STEP 4: Write Excel file to browser
-XLSX.writeFile(wb, "xlsx-js-style-demo.xlsx");
-```
-
 ### Cell Style JSON structure
 
 -   Cell styles are specified by a style object that roughly parallels the OpenXML structure.
--   Style properties currently supported are: `alignment`, `border`, `fill`, `font`, `numFmt`.
+-   Style properties currently supported are: `alignment`, `border`, `fill`, `font`.
 
 
 ```js
@@ -156,6 +134,29 @@ XLSX.writeFile(wb, "xlsx-js-style-demo.xlsx");
 
 ```
 
+
+### Cell Style Example
+
+```js
+// STEP 1: Create a new workbook
+const wb = XLSX.utils.book_new();
+
+// STEP 2: Create data rows and styles
+let row = [
+  { v: "line\nbreak", t: "s", s: { alignment: { wrapText: true } } },
+  { v: "Courier: 24", t: "s", s: { font: { name: "Courier", sz: 24 } } },
+  { v: "fill: color", t: "s", s: { fill: { fgColor: { rgb: "E9E9E9" } } } },
+  { v: "bold & color", t: "s", s: { font: { bold: true, color: { rgb: "FF0000" } } } },
+];
+
+// STEP 3: Create worksheet with rows; Add worksheet to workbook
+const ws = XLSX.utils.aoa_to_sheet([row]);
+XLSX.utils.book_append_sheet(wb, ws, "readme demo");
+
+// STEP 4: Write Excel file to browser
+XLSX.writeFile(wb, "xlsx-js-style-demo.xlsx");
+```
+
 <!-- | Style Prop  | Sub Prop       | Default     | Description/Values                                                                                |
 | :---------- | :------------- | :---------- | ------------------------------------------------------------------------------------------------- |
 | `alignment` | `vertical`     | `bottom`    | `"top"` or `"center"` or `"bottom"`                                                               |
@@ -191,25 +192,23 @@ Colors for `border`, `fill`, `font` are specified as an name/value object - use 
 
 ```js
  // JSON structure
- const rgb = {
+ const COLOR_STYLE = { // hex RGB value 
     rgb: 'FFCC00'
  }
-
- const theme = {
+ const COLOR_STYLE = { // theme color index
     theme: 4 // (0-n) // Theme color index 4 ("Blue, Accent 1")
  }
-
- const tint = {
+ const COLOR_STYLE = { // tint by percent
     theme: 1, 
-    tint: 0.4
- } // ("Blue, Accent 1, Lighter 40%")
+    tint: 0.4 // ("Blue, Accent 1, Lighter 40%")
+ } 
 ```
 
-| Color Prop | Description       | Example                                                         |
+<!-- | Color Prop | Description       | Example                                                         |
 | :--------- | ----------------- | --------------------------------------------------------------- |
 | `rgb`      | hex RGB value     | `{rgb: "FFCC00"}`                                               |
 | `theme`    | theme color index | `{theme: 4}` // (0-n) // Theme color index 4 ("Blue, Accent 1") |
-| `tint`     | tint by percent   | `{theme: 1, tint: 0.4}` // ("Blue, Accent 1, Lighter 40%")      |
+| `tint`     | tint by percent   | `{theme: 1, tint: 0.4}` // ("Blue, Accent 1, Lighter 40%")      | -->
 
 ### `BORDER_STYLE` {string} Properties
 
