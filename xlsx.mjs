@@ -2176,6 +2176,7 @@ var consts = {
 };
 
 function write_file(cfb/*:CFBContainer*/, filename/*:string*/, options/*:CFBWriteOpts*/)/*:void*/ {
+	console.log('------------------------------------------------------------------------------------')
 	get_fs();
 	var o = _write(cfb, options);
 	/*:: if(typeof Buffer == 'undefined' || !Buffer.isBuffer(o) || !(o instanceof Buffer)) throw new Error("unreachable"); */

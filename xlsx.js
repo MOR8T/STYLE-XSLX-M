@@ -14857,6 +14857,12 @@ function write_ws_xml_margins(margin) {
 	default_margins(margin);
 	return writextag('pageMargins', null, margin);
 }
+function write_ws_xml_pageSetup(pagesetup){
+    if(!pagesetup) return ''
+    let tag = JSON.stringify(pagesetup).replace(/":"/g,'="').replace(/","/g,'" ')
+    tag = tag.slice(2,tag.length-1)
+    return `<pageSetup ${tag} />`
+  }
 
 function parse_ws_xml_cols(columns, cols) {
 	var seencol = false;
@@ -15303,6 +15309,8 @@ ws['!links'].forEach(function(l) {
 	/* printOptions */
 
 	if(ws['!margins'] != null) o[o.length] =  write_ws_xml_margins(ws['!margins']);
+	if(ws['!pageSetup'] != null) o[o.length] =  write_ws_xml_pageSetup(ws['!pageSetup']);
+	console.log(o[o.length-1])
 
 	/* pageSetup */
 	/* headerFooter */
@@ -24697,7 +24705,7 @@ XLSX.read = readSync; //xlsread
 XLSX.readFile = readFileSync; //readFile
 XLSX.readFileSync = readFileSync;
 XLSX.write = writeSync;
-XLSX.writeFile = XLSXJSStyle.writeFile
+XLSX.writeFile = writeFileSync //XLSXJSStyle.writeFile
 XLSX.writeFileSync = writeFileSync;
 XLSX.writeFileAsync = writeFileAsync;
 XLSX.utils = utils;
