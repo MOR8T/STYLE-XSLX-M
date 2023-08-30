@@ -14494,6 +14494,7 @@ function make_xlsx_lib(a) {
     return i.join("");
   }
   function xl(e, t, r, a) {
+    console.log('e',e,'\n','t',t,'\n','r',r,'\n','a',a)
     var n,
       s,
       i = [ot, Yt("worksheet", null, { xmlns: Qt[0], "xmlns:r": Zt.r })],

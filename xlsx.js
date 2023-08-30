@@ -23491,7 +23491,7 @@ function parse_zip(zip, opts) {
 		if(dir.vba.length > 0) out.vbaraw = getzipdata(zip,strip_front_slash(dir.vba[0]),true);
 		else if(dir.defaults && dir.defaults.bin === CT_VBA) out.vbaraw = getzipdata(zip, 'xl/vbaProject.bin',true);
 	}
-	// console.log('out',JSON.stringify(out))
+	console.log('',JSON.stringify(out))
 	return out;
 }
 
@@ -24718,7 +24718,6 @@ if(typeof require !== "undefined") {
   var strmod = require('stream');
   if((strmod||{}).Readable) set_readable(strmod.Readable);
 }
-console.log(XLSX)
 }
 /*global define */
 if(typeof exports !== 'undefined') make_xlsx_lib(exports);
