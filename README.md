@@ -1,5 +1,5 @@
 # style-xlsx-m
-# Now i test library pleas wait to evening (finished in 8/30/2022 10:00 pm)
+<!-- # Now i test library pleas wait to evening (finished in 8/30/2022 10:00 pm) -->
 ## ℹ️ About
 
 Style-xlsx-m is a custom [XLSX](https://www.npmjs.com/package/xlsx) (SheetJs) version library with styling from [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style)
@@ -61,7 +61,7 @@ XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
 ```
  This example shows how you can change the contents of a file without removing its old style.
 
-### 2. read or readFile
+<!-- ### 2. read or readFile
 
 ```js
  // new keys on worksheet
@@ -96,7 +96,7 @@ XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
  ws['!headerFooter'] = {
    alignWithMargins: "0"
  }
-```
+``` -->
 
 ## 🗒 Style API
 -- Method to export file in excel with style get from [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style) (only function writeFile)

@@ -1,4 +1,4 @@
-/* xlsx-js-style 1.2.0-beta @ 2022-04-05T01:40:48.447Z */
+/* xlsx-js-style 1.2.0-beta @ 2022-04-05T01:40:40.843Z */
 var XLSX = {};
 function make_xlsx_lib(a) {
   (a.version = "0.18.5"), (a.style_version = "1.2.0");
@@ -3368,6 +3368,7 @@ function make_xlsx_lib(a) {
           return r;
         }),
         (e.writeFile = function (e, t, r) {
+          // console.log('e.writeFile-----------------------------------------'),
           i(), (r = a(e, r)), s.writeFileSync(t, r);
         }),
         (e.utils = {
@@ -4202,10 +4203,13 @@ function make_xlsx_lib(a) {
     return "";
   }
   function parse_xml_pageSetup(pagesetup){
+    // console.log('------',pagesetup)
     if(!pagesetup) return ''
-    let tag = JSON.stringify(pagesetup).replace(/":"/g,'="').replace(/","/g,'" ')
-    tag = tag.slice(2,tag.length-1)
-    return `<pageSetup ${tag} />`
+    // let tag = JSON.stringify(pagesetup).replace(/":"/g,'="').replace(/","/g,'" ')
+    // tag = tag.slice(2,tag.length-1)
+    // return `<pageSetup ${tag} />`
+    // console.log('---------------------------------------------------------------==============',pagesetup)
+    return pagesetup
   }
   function parse_xml_colBreaks(colBreaks){
     if(!colBreaks) return ''
@@ -4222,15 +4226,25 @@ function make_xlsx_lib(a) {
     return headerfooter
   }
   function parse_xml(c,i){
+    // if(c['!worksheet']){
+    //   i[1] = c['!worksheet']
+    // }
     if(c['!sheetPr']){
       i[1] = i[1]+c['!sheetPr']
     }
     if(c['!sheetViews']){
       i[3] = c['!sheetViews']
     }
+    if(c['!phoneticPr']){
+      i[i.length-1] = c['!phoneticPr']+i[i.length-1]
+    }
+    // console.log([...i].join(''))
     // if(c['!sheetFormatPr']){
-    //   i[3] = i[3]+c['!sheetFormatPr']
+    //   i[5] = c['!sheetFormatPr']+i[5]
     // }
+    // console.log(i[1],`
+    // `,i[3],`
+    // `)
     const t =parse_xml_pageSetup(c['!pageSetup'])+parse_xml_headerFooter(c['!headerFooter'])+parse_xml_colBreaks(c['!colBreaks'])
     return t
   }
@@ -5917,6 +5931,7 @@ function make_xlsx_lib(a) {
       }
   }
   function ln(r) {
+    // console.log('ln')
     var a = [],
       n = Yt;
     return (
@@ -9589,6 +9604,7 @@ function make_xlsx_lib(a) {
     Oi = /<\/(?:\w+:)?(?:si|sstItem)>/;
   var Ii = /^\s|\s$|[\t\n\r]/;
   function Ni(e, t) {
+    // console.log('Ni')
     if (!t.bookSST) return "";
     var r = [ot];
     r[r.length] = Yt("sst", null, {
@@ -10637,6 +10653,7 @@ function make_xlsx_lib(a) {
         );
       });
   function _o(e, t) {
+    // console.log('_o')
     if (void 0 !== yo) return yo.toXml();
     var r,
       a,
@@ -11021,6 +11038,7 @@ function make_xlsx_lib(a) {
     );
   }
   function Xo(e, t) {
+    // console.log('Xo')
     if (t && t.themeXLSX) return t.themeXLSX;
     if (e && "string" == typeof e.raw) return e.raw;
     e = [ot];
@@ -14363,6 +14381,7 @@ function make_xlsx_lib(a) {
         0 < A.length && (t["!rows"] = A);
       });
   function _l(e, t) {
+    // console.log('_l')
     for (
       var r,
         a,
@@ -14491,10 +14510,11 @@ function make_xlsx_lib(a) {
           -1 < m && ((p.ht = m), (p.customHeight = 1)),
           s.level && (p.outlineLevel = s.level),
           (i[i.length] = Yt("row", "", p)));
+          // console.log('i',i)
     return i.join("");
   }
   function xl(e, t, r, a) {
-    console.log('e',e,'\n','t',t,'\n','r',r,'\n','a',a)
+    // console.log('xl')
     var n,
       s,
       i = [ot, Yt("worksheet", null, { xmlns: Qt[0], "xmlns:r": Zt.r })],
@@ -14524,14 +14544,16 @@ function make_xlsx_lib(a) {
         } catch (e) {}
         (s = !0), (i.codeName = Ut(kt(c)));
       }
+      // console.log(e['!pageSetup'])
       e &&
         e["!outline"] &&
         ((a = { summaryBelow: 1, summaryRight: 1 }),
         e["!outline"].above && (a.summaryBelow = 0),
         e["!outline"].left && (a.summaryRight = 0),
-        (o = (o || "") + Yt("outlinePr", null, a))),
-        (s || o) && (n[n.length] = Yt("sheetPr", o, i));
-    })(c, r, e, t, i),
+        (o = (o || "") + Yt("outlinePr", null, a)));
+        // (o = (o || "") + Yt("outlinePr", null, a))),
+        // (s || o) && (n[n.length] = Yt("sheetPr", o, i));
+    })(c, r, e, t, i),/////////////////
       (i[i.length] = Yt("dimension", null, { ref: l })),
       (i[i.length] =
         ((o = { workbookViewId: "0" }),
@@ -14606,9 +14628,13 @@ function make_xlsx_lib(a) {
             t += '<mergeCell ref="' + qr(e[r]) + '"/>';
           return t + "</mergeCells>";
         })(c["!merges"]));
+        // console.log('000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000')
+        // null != c["!pageSetup"] &&
+        // (i[i.length] = '<pageSetup paperSize="9" scale="91" fitToWidth="0" orientation="landscape" r:id="rId1" />')
     var p,
       m,
       g = -1;
+      // console.log('i',i)
     return (
       0 < c["!links"].length &&
         ((i[i.length] = "<hyperlinks>"),
@@ -14627,7 +14653,7 @@ function make_xlsx_lib(a) {
       delete c["!links"],
       null != c["!margins"] &&
         (i[i.length] = (Qc((r = c["!margins"])), Yt("pageMargins", null, r))),
-        (i[i.length] = (parse_xml(c,i))),
+        (i[i.length] = (parse_xml(c,i))),////////////
       (t && !t.ignoreEC && null != t.ignoreEC) ||
         (i[i.length] = $t(
           "ignoredErrors",
@@ -14642,7 +14668,8 @@ function make_xlsx_lib(a) {
         (i[i.length] = Yt("legacyDrawing", null, { "r:id": "rId" + g })),
         (c["!legacy"] = g)),
       1 < i.length &&
-        ((i[i.length] = "</worksheet>"), (i[1] = i[1].replace("/>", ">"))),
+        ((i[i.length] = '</worksheet>'), (i[1] = i[1].replace("/>", ">"))),
+        (console.log([...i].join(""))),
         i.join("")
     );
   }
@@ -15302,6 +15329,7 @@ function make_xlsx_lib(a) {
   }
   var ql = /<\w+:workbook/;
   function Zl(t) {
+    // console.log('Zl')
     var r = [ot];
     r[r.length] = Yt("workbook", null, { xmlns: Qt[0], "xmlns:r": Zt.r });
     var e = t.Workbook && 0 < (t.Workbook.Names || []).length,
@@ -16633,6 +16661,7 @@ function make_xlsx_lib(a) {
     }
   }
   function vf(e, t) {
+    // console.log('vf')
     var r = t || {};
     Ee();
     var a,
@@ -17572,6 +17601,7 @@ function make_xlsx_lib(a) {
           if (r.WTF) throw "Unrecognized tag: " + a[3] + "|" + l.join("|");
       }
     o = {};
+    // console.log(W)
     return (
       r.bookSheets || r.bookProps || (o.Sheets = h),
       (o.SheetNames = u),
@@ -24788,6 +24818,7 @@ function make_xlsx_lib(a) {
     throw new Error("File is password-protected");
   }
   function Gh(e, t) {
+    // console.log("Gh")
     return (
       "ods" == t.bookType
         ? lh
@@ -24947,7 +24978,7 @@ function make_xlsx_lib(a) {
   }
   function jh(e, t) {
     (Zo = 1024),
-      e && !e.SSF && (e.SSF = Ve(me)),
+      e && !e.SSF && (e.SSF = Ve(me)),//
       e &&
         e.SSF &&
         (Ee(),
@@ -24989,7 +25020,7 @@ function make_xlsx_lib(a) {
         e.Props.SheetNames = c;
       } else e.Props.SheetNames = e.SheetNames;
     (e.Props.Worksheets = e.Props.SheetNames.length),
-      at(s, i, ln(e.Props)),
+      at(s, i, ln(e.Props)),///
       n.extprops.push(i),
       Ja(t.rels, 3, i, $a.EXT_PROPS),
       e.Custprops !== e.Props &&
@@ -25006,7 +25037,7 @@ function make_xlsx_lib(a) {
         m,
         g = { "!id": {} },
         b = e.Sheets[e.SheetNames[o - 1]];
-      at(s, (i = "xl/worksheets/sheet" + o + "." + r), xl(o - 1, t, e, g)),
+      at(s, (i = "xl/worksheets/sheet" + o + "." + r), xl(o - 1, t, e, g)),///
         n.sheets.push(i),
         Ja(t.wbrels, -1, "worksheets/sheet" + o + "." + r, $a.WS[0]),
         b &&
@@ -25085,16 +25116,16 @@ function make_xlsx_lib(a) {
     return (
       null != t.Strings &&
         0 < t.Strings.length &&
-        (at(s, (i = "xl/sharedStrings.xml"), Ni(t.Strings, t)),
+        (at(s, (i = "xl/sharedStrings.xml"), Ni(t.Strings, t)),//
         n.strs.push(i),
         Ja(t.wbrels, -1, "sharedStrings.xml", $a.SST)),
-      at(s, (i = "xl/workbook.xml"), Zl(e)),
+      at(s, (i = "xl/workbook.xml"), Zl(e)),//////////////////////////////////////////////
       n.workbooks.push(i),
       Ja(t.rels, 1, i, $a.WB),
-      at(s, (i = "xl/theme/theme1.xml"), Xo(e.Themes, t)),
+      at(s, (i = "xl/theme/theme1.xml"), Xo(e.Themes, t)),//
       n.themes.push(i),
       Ja(t.wbrels, -1, "theme/theme1.xml", $a.THEME),
-      at(s, (i = "xl/styles.xml"), _o(e, t)),
+      at(s, (i = "xl/styles.xml"), _o(e, t)),///
       n.styles.push(i),
       Ja(t.wbrels, -1, "styles.xml", $a.STY),
       e.vbaraw &&
@@ -25135,7 +25166,7 @@ function make_xlsx_lib(a) {
         ),
         n.people.push(i),
         Ja(t.wbrels, -1, "persons/person.xml", $a.PEOPLE)),
-      at(s, "[Content_Types].xml", ja(n, t)),
+      at(s, "[Content_Types].xml", ja(n, t)),///
       at(s, "_rels/.rels", Ka(t.rels)),
       at(s, "xl/_rels/workbook.xml.rels", Ka(t.wbrels)),
       delete t.revssf,
@@ -25369,6 +25400,7 @@ function make_xlsx_lib(a) {
     return (t.type = "file"), Kh(e, t);
   }
   function qh(e, t) {
+    // console.log('qh')
     switch (t.type) {
       case "base64":
       case "binary":
@@ -25488,6 +25520,7 @@ function make_xlsx_lib(a) {
     return (a.type = "array"), o(e);
   }
   function ru(e, t) {
+    // console.log('ru')
     h(), Jl(e);
     var r = Ve(t || {});
     if (
@@ -25509,6 +25542,7 @@ function make_xlsx_lib(a) {
       !e.SheetNames[i])
     )
       throw new Error("Sheet not found: " + r.sheet + " : " + typeof r.sheet);
+      // console.log('r.bookType',r.bookType)
     switch (r.bookType || "xlsb") {
       case "xml":
       case "xlml":
@@ -25582,6 +25616,7 @@ function make_xlsx_lib(a) {
     }
   }
   function au(e) {
+    // console.log('au')
     var t;
     e.bookType ||
       ((t = e.file.slice(e.file.lastIndexOf(".")).toLowerCase()).match(
@@ -25597,6 +25632,7 @@ function make_xlsx_lib(a) {
         }[e.bookType] || e.bookType));
   }
   function nu(e, t, r) {
+    // console.log('nu --------------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu--------- - -- - --nu')
     r = r || {};
     return (r.type = "file"), (r.file = t), au(r), ru(e, r);
   }
@@ -26218,7 +26254,7 @@ function make_xlsx_lib(a) {
         (a.prototype.escapeAttributeValue = function (e) {
           return '"' + e.replace(/\"/g, "&quot;") + '"';
         }),
-        (a.prototype.toXml = function (e) {
+        (a.prototype.toXml = function (e) {// in this function make style tag
           var t = (e = e || this)._prefix;
           if (((t += "<" + e.tagName), e._attributes))
             for (var r in e._attributes)
@@ -26230,7 +26266,7 @@ function make_xlsx_lib(a) {
           if (e._children && 0 < e._children.length) {
             t += ">";
             for (var a = 0; a < e._children.length; a++)
-              t += this.toXml(e._children[a]);
+              t += this.toXml(e._children[a]);////
             t += "</" + e.tagName + ">";
           } else t += "/>";
           return t;
@@ -26239,6 +26275,7 @@ function make_xlsx_lib(a) {
       );
     })(),
     wu = function (e) {
+        // console.log('wu')
       var t,
         r = 164,
         a = {
@@ -26489,6 +26526,7 @@ function make_xlsx_lib(a) {
           return this.$borders.attr("count", e), e - 1;
         },
         toXml: function () {
+            // console.log('toXml')
           return this.$styles.toXml();
         },
       }.initialize(e || {});
@@ -26502,6 +26540,7 @@ function make_xlsx_lib(a) {
     (a.writeFile = nu),
     (a.writeFileSync = nu),
     (a.writeFileAsync = function (e, t, r, a) {
+      // console.log('a.writeFileAsync------------------------------------')
       var n = r || {};
       return (
         (n.type = "file"),
@@ -26515,6 +26554,7 @@ function make_xlsx_lib(a) {
     (a.utils = Es),
     (a.writeXLSX = tu),
     (a.writeFileXLSX = function (e, t, r) {
+      // console.log('e.writeFileXLSX-----------------------------')
       return ((r = r || {}).type = "file"), (r.file = t), au(r), tu(e, r);
     }),
     (a.SSF = e),
@@ -26538,4 +26578,4 @@ if (
   try {
     window.XLSX = XLSX;
   } catch (e) {}
-//# sourceMappingURL=xlsx.bundle.js.map
+//# sourceMappingURL=xlsx.min.js.map
