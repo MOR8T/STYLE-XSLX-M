@@ -2,7 +2,6 @@
 /* vim: set ts=2: */
 /*exported XLSX */
 /*global process:false, Buffer:false, ArrayBuffer:false, DataView:false, Deno:false */
-import * as XLSXJSStyle from ('./xlsx-js-style/dist/xlsx.min')
 
 var XLSX = {};
 XLSX.version = '0.18.5';
