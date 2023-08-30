@@ -24024,14 +24024,13 @@ function resolve_book_type(o/*:WriteFileOpts*/) {
 	o.bookType = _BT[o.bookType] || o.bookType;
 }
 
-// function writeFileSync(wb/*:Workbook*/, filename/*:string*/, opts/*:?WriteFileOpts*/) {
-// 	var o = opts||{}; o.type = 'file';
-// 	o.file = filename;
-// 	resolve_book_type(o);
-// 	return writeSync(wb, o);
-// }
-
-const writeFileSync = XLSXJSStyle.writeFileAsync
+function writeFileSync(wb/*:Workbook*/, filename/*:string*/, opts/*:?WriteFileOpts*/) {
+	var o = opts||{}; o.type = 'file';
+	o.file = filename;
+	resolve_book_type(o);
+	console.log(filename,opts,0)
+	return writeSync(wb, o);
+}
 
 function writeFileSyncXLSX(wb/*:Workbook*/, filename/*:string*/, opts/*:?WriteFileOpts*/) {
 	var o = opts||{}; o.type = 'file';
