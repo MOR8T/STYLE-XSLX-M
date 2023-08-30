@@ -1,6 +1,6 @@
 {
 	"name": "style-xlsx-m",
-	"version": "0.1.21.8",
+	"version": "0.1.21.9",
 	"author": "mor8t (Shukurov Shahrom)",
 	"description": "style-xlsx-m is a custom xlsx and xlsx-js-style version library",
 	"keywords": [
@@ -26,7 +26,7 @@
 		"xlsx": "./bin/xlsx.njs"
 	},
 	"main": "xlsx.js",
-	"module": "xlsx.mini.min.js",
+	"module": "./xlsx.bundle.js",
 	"unpkg": "dist/xlsx.full.min.js",
 	"jsdelivr": "dist/xlsx.full.min.js",
 	"types": "types/index.d.ts",
