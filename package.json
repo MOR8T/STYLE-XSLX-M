@@ -1,14 +1,14 @@
 {
 	"name": "style-xlsx-m",
-	"version": "0.1.16",
+	"version": "0.1.17",
 	"author": "mor8t (Shukurov Shahrom)",
 	"description": "style-xlsx-m is a custom xlsx and xlsx-js-style version library",
 	"keywords": [
 		"excel",
 		"xls",
 		"xlsx",
-		"xlsb",
 		"xlsm",
+		"xlsb",
 		"ods",
 		"csv",
 		"dbf",
@@ -16,7 +16,11 @@
 		"sylk",
 		"office",
 		"spreadsheet",
-		"style"
+		"style",
+		"print",
+		"format",
+		"workbook",
+		"worksheet"
 	],
 	"bin": {
 		"xlsx": "./bin/xlsx.njs"
