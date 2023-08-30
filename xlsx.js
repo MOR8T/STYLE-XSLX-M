@@ -14686,7 +14686,7 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 
 	/* 0.1.17 sheetPr mor8t */
 	var sheetPr = data.match(sheetPrregex);
-	console.log(data)
+	// console.log(data)
 	if(sheetPr) s['!sheetPr'] = sheetPr[0]
 
 	// /* 0.1.17 sheetFormatPr mor8t */
@@ -23484,7 +23484,7 @@ function parse_zip(zip, opts) {
 		if(dir.vba.length > 0) out.vbaraw = getzipdata(zip,strip_front_slash(dir.vba[0]),true);
 		else if(dir.defaults && dir.defaults.bin === CT_VBA) out.vbaraw = getzipdata(zip, 'xl/vbaProject.bin',true);
 	}
-	// console.log('out')
+	console.log('out',JSON.stringify(out))
 	return out;
 }
 
