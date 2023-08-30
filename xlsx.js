@@ -14686,6 +14686,7 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 
 	/* 0.1.17 sheetPr mor8t */
 	var sheetPr = data.match(sheetPrregex);
+	console.log(data)
 	if(sheetPr) s['!sheetPr'] = sheetPr[0]
 
 	// /* 0.1.17 sheetFormatPr mor8t */
