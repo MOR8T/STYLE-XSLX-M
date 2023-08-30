@@ -14607,6 +14607,8 @@ var sheetFormatPrregex = /<(?:\w:)?sheetFormatPr[^>]*\/>/g;
 var sheetPrregex = /(<(?:\w:)?sheetPr[^>]*\/>)|(<(?:\w+:)?sheetPr[^>]*>([\s\S]*)<\/(?:\w+:)?sheetPr>)/g;
 var pagesetuptagregex = /(\w*="(\d*|\w*\d*|.*)"|r:id="(.*)")/g;
 var sheetViewsregex = /(<(?:\w:)?sheetViews[^>]*\/>)|(<(?:\w+:)?sheetViews[^>]*>([\s\S]*)<\/(?:\w+:)?sheetViews>)/g
+var worksheetregex = /<worksheet [^>]*>/;
+var phoneticPrregex = /<(?:\w:)?phoneticPr[^>]*\/>/g;
 
 
 paperSize="9"
@@ -14675,33 +14677,44 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 
 	/* 0.1.17 pageSetup mor8t */
 	var pagesetup = data.match(pagesetupregex);
-	console.log('pagesetup',pagesetup[0])
+	// console.log('pagesetup',pagesetup[0])
 	// if(pagesetup) parse_ws_xml_pageSetup(s, pagesetup);
 	if(pagesetup) s['!pageSetup'] = pagesetup[0];
 
 	/* 0.1.17 colBreacks mor8t */
 	var colbreaks = data.match(colbreaksregex);
-	console.log('colbreaks',colbreaks[0])
+	// console.log('colbreaks',colbreaks[0])
 	if(colbreaks) parse_ws_xml_colBreaks(s, colbreaks)
 	
 	/* 0.1.17 headerFooter mor8t */
 	var headerfooter = data.match(headerFooterregex);
 	console.log('headerfooter',headerfooter[0])
-	if(headerfooter) parse_ws_xml_headerFooter(s, headerfooter)
+	if(headerfooter) parse_ws_xml_headerFooter(s, headerfooter[0])
 
 	/* 0.1.17 sheetPr mor8t */
 	var sheetPr = data.match(sheetPrregex);
-	console.log('sheetPr',sheetPr[0])
+	// console.log('sheetPr',sheetPr[0])
 	if(sheetPr) s['!sheetPr'] = sheetPr[0]
 
 	// /* 0.1.17 sheetFormatPr mor8t */
-	// var sheetFormatPr = data.match(sheetFormatPrregex);
-	// if(sheetFormatPr) s['!sheetFormatPr'] = sheetFormatPr[0]
+	var sheetFormatPr = data.match(sheetFormatPrregex);
+	// console.log('sheetFormatPr',sheetFormatPr[0])
+	if(sheetFormatPr) s['!sheetFormatPr'] = sheetFormatPr[0]
 
 	/* 0.1.17 sheetVeiw mor8t */
 	var sheetViews = data.match(sheetViewsregex);
-	console.log('sheetViews',sheetViews)
+	// console.log('sheetViews',sheetViews[0])
 	if(sheetViews) s['!sheetViews'] = sheetViews[0]
+
+	/* 0.1.17 worksheet_origional_tag mor8t */
+	var worksheet = data.match(worksheetregex);
+	// console.log('worksheet',worksheet[0])
+	if(worksheet) s['!worksheet'] = worksheet[0]
+
+	/* 0.1.17 phoneticPr mor8t */
+	var phoneticPr = data.match(phoneticPrregex);
+	// console.log('phoneticPr',phoneticPr[0])
+	if(phoneticPr) s['!phoneticPr'] = phoneticPr[0]
 
 
 	/* 18.3.1.62 pageMargins CT_PageMargins */
@@ -14850,7 +14863,7 @@ function parse_ws_xml_colBreaks(s, colbreaks){
 	})
 }
 function parse_ws_xml_headerFooter(s, headerFooter){
-	s['!headerFooter'] = headerFooter[0]
+	s['!headerFooter'] = headerFooter
 }
 
 function parse_ws_xml_margins(margin) {
