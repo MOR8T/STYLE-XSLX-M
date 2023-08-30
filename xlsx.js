@@ -14686,7 +14686,6 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 
 	/* 0.1.17 sheetPr mor8t */
 	var sheetPr = data.match(sheetPrregex);
-	// console.log(data)
 	if(sheetPr) s['!sheetPr'] = sheetPr[0]
 
 	// /* 0.1.17 sheetFormatPr mor8t */
@@ -23484,7 +23483,7 @@ function parse_zip(zip, opts) {
 		if(dir.vba.length > 0) out.vbaraw = getzipdata(zip,strip_front_slash(dir.vba[0]),true);
 		else if(dir.defaults && dir.defaults.bin === CT_VBA) out.vbaraw = getzipdata(zip, 'xl/vbaProject.bin',true);
 	}
-	console.log('out',JSON.stringify(out))
+	// console.log('out',JSON.stringify(out))
 	return out;
 }
 
@@ -24697,13 +24696,13 @@ XLSX.parse_zip = parse_zip;
 XLSX.read = readSync; //xlsread
 XLSX.readFile = readFileSync; //readFile
 XLSX.readFileSync = readFileSync;
-XLSX.write = writeSync;
-XLSX.writeFile = (a,b,c)=>{console.log(a,b,c);XLSXJSStyle.writeFile(a,b,c)};
-XLSX.writeFileSync = writeFileSync;
-XLSX.writeFileAsync = writeFileAsync;
+XLSX.write = XLSXJSStyle.writeSync;
+XLSX.writeFile = XLSXJSStyle.writeFile
+XLSX.writeFileSync = XLSXJSStyle.writeFileSync;
+XLSX.writeFileAsync = XLSXJSStyle.writeFileAsync;
 XLSX.utils = utils;
-XLSX.writeXLSX = writeSyncXLSX;
-XLSX.writeFileXLSX = writeFileSyncXLSX;
+XLSX.writeXLSX = XLSXJSStyle.writeSyncXLSX;
+XLSX.writeFileXLSX = XLSXJSStyle.writeFileSyncXLSX;
 XLSX.SSF = SSF;
 if(typeof __stream !== "undefined") XLSX.stream = __stream;
 if(typeof CFB !== "undefined") XLSX.CFB = CFB;
