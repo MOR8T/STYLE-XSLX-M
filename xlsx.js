@@ -14603,6 +14603,7 @@ var pagesetupregex = /<(?:\w:)?pageSetup[^>]*\/>/g;
 var colbreaksregex = /<(?:\w+:)?colBreaks[^>]*>([\s\S]*)<\/(?:\w+:)?colBreaks>/;
 var headerFooterregex = /<(?:\w:)?headerFooter[^>]*\/>/g;
 var sheetFormatPrregex = /<(?:\w:)?sheetFormatPr[^>]*\/>/g;
+// var sheetPrregex = /(<(?:\w:)?sheetPr[^>]*\/>)|(<(?:\w+:)?sheetPr[^>]*>([\s\S]*)<\/(?:\w+:)?sheetPr>)/g;
 var sheetPrregex = /(<(?:\w:)?sheetPr[^>]*\/>)|(<(?:\w+:)?sheetPr[^>]*>([\s\S]*)<\/(?:\w+:)?sheetPr>)/g;
 var pagesetuptagregex = /(\w*="(\d*|\w*\d*|.*)"|r:id="(.*)")/g;
 var sheetViewsregex = /(<(?:\w:)?sheetViews[^>]*\/>)|(<(?:\w+:)?sheetViews[^>]*>([\s\S]*)<\/(?:\w+:)?sheetViews>)/g
@@ -14674,18 +14675,23 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 
 	/* 0.1.17 pageSetup mor8t */
 	var pagesetup = data.match(pagesetupregex);
-	if(pagesetup) parse_ws_xml_pageSetup(s, pagesetup);
+	console.log('pagesetup',pagesetup[0])
+	// if(pagesetup) parse_ws_xml_pageSetup(s, pagesetup);
+	if(pagesetup) s['!pageSetup'] = pagesetup[0];
 
 	/* 0.1.17 colBreacks mor8t */
 	var colbreaks = data.match(colbreaksregex);
+	console.log('colbreaks',colbreaks[0])
 	if(colbreaks) parse_ws_xml_colBreaks(s, colbreaks)
 	
 	/* 0.1.17 headerFooter mor8t */
 	var headerfooter = data.match(headerFooterregex);
+	console.log('headerfooter',headerfooter[0])
 	if(headerfooter) parse_ws_xml_headerFooter(s, headerfooter)
 
 	/* 0.1.17 sheetPr mor8t */
 	var sheetPr = data.match(sheetPrregex);
+	console.log('sheetPr',sheetPr[0])
 	if(sheetPr) s['!sheetPr'] = sheetPr[0]
 
 	// /* 0.1.17 sheetFormatPr mor8t */
@@ -14694,6 +14700,7 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 
 	/* 0.1.17 sheetVeiw mor8t */
 	var sheetViews = data.match(sheetViewsregex);
+	console.log('sheetViews',sheetViews)
 	if(sheetViews) s['!sheetViews'] = sheetViews[0]
 
 
@@ -23265,6 +23272,7 @@ function safe_parse_sheet(zip, path, relsPath, sheet, idx, sheetRels, sheets, st
 		sheetRels[sheet]=parse_rels(getzipstr(zip, relsPath, true), path);
 		var data = getzipdata(zip, path);
 		var _ws;
+		console.log(data)
 		// console.log('safe_parse_sheet')
 		// console.log(stype)
 		switch(stype) {
@@ -23491,7 +23499,7 @@ function parse_zip(zip, opts) {
 		if(dir.vba.length > 0) out.vbaraw = getzipdata(zip,strip_front_slash(dir.vba[0]),true);
 		else if(dir.defaults && dir.defaults.bin === CT_VBA) out.vbaraw = getzipdata(zip, 'xl/vbaProject.bin',true);
 	}
-	console.log('',JSON.stringify(out))
+	// console.log('',JSON.stringify(out))
 	return out;
 }
 
