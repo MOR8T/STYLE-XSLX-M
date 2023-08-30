@@ -9,7 +9,7 @@ function make_xlsx_lib(a) {
     ? (re = cptable)
     : "undefined" != typeof module &&
       "undefined" != typeof require &&
-      (re = require("./cpexcel.js"));
+      (re = require("./xlsx-js-style/dist/cpexcel"));
   var t = [
       874, 932, 936, 949, 950, 1250, 1251, 1252, 1253, 1254, 1255, 1256, 1257,
       1258, 1e4,

@@ -24031,8 +24031,6 @@ function writeFileSync(wb/*:Workbook*/, filename/*:string*/, opts/*:?WriteFileOp
 	return writeSync(wb, o);
 }
 
-const writeFileSync = XLSXJSStyle.writeFile
-
 function writeFileSyncXLSX(wb/*:Workbook*/, filename/*:string*/, opts/*:?WriteFileOpts*/) {
 	var o = opts||{}; o.type = 'file';
 	o.file = filename;
