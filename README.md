@@ -1,5 +1,5 @@
 # style-xlsx-m
-# Now i test library pleas wait to evening 
+# Now i test library pleas wait to evening (finished in 8/30/2022 10:00 pm)
 ## ℹ️ About
 
 Style-xlsx-m is a custom [XLSX](https://www.npmjs.com/package/xlsx) (SheetJs) version library with styling from [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style)
