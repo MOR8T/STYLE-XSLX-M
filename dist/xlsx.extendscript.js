@@ -1,6 +1,7 @@
 /*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
 /*! shim.js (C) 2013-present SheetJS -- http://sheetjs.com */
 /* ES3/5 Compatibility shims and other utilities for older browsers. */
+const XLSXJSStyle = require('../xlsx-js-style/dist/xlsx.min')
 
 // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
 if(!Object.keys) Object.keys = (function() {
@@ -24619,7 +24620,7 @@ XLSX.read = readSync; //xlsread
 XLSX.readFile = readFileSync; //readFile
 XLSX.readFileSync = readFileSync;
 XLSX.write = writeSync;
-XLSX.writeFile = writeFileSync;
+XLSX.writeFile = XLSXJSStyle.writeFile;
 XLSX.writeFileSync = writeFileSync;
 XLSX.writeFileAsync = writeFileAsync;
 XLSX.utils = utils;
