@@ -4201,6 +4201,39 @@ function make_xlsx_lib(a) {
     }
     return "";
   }
+  function parse_xml_pageSetup(pagesetup){
+    if(!pagesetup) return ''
+    let tag = JSON.stringify(pagesetup).replace(/":"/g,'="').replace(/","/g,'" ')
+    tag = tag.slice(2,tag.length-1)
+    return `<pageSetup ${tag} />`
+  }
+  function parse_xml_colBreaks(colBreaks){
+    if(!colBreaks) return ''
+    let t = ''
+    colBreaks.brk.map((el) => {
+      let tag = JSON.stringify(el).replace(/":"/g,'="').replace(/","/g,'" ')
+      t+= `<brk ${tag.slice(2,tag.length-1)} />`
+    })
+    let tag = JSON.stringify(colBreaks.colBreaks).replace(/":"/g,'="').replace(/","/g,'" ')
+    return `<colBreaks ${tag.slice(2,tag.length-1)}>${t}</colBreaks>`
+  }
+  function parse_xml_headerFooter(headerfooter){
+    if(!headerfooter) return ''
+    return headerfooter
+  }
+  function parse_xml(c,i){
+    if(c['!sheetPr']){
+      i[1] = i[1]+c['!sheetPr']
+    }
+    if(c['!sheetViews']){
+      i[3] = c['!sheetViews']
+    }
+    // if(c['!sheetFormatPr']){
+    //   i[3] = i[3]+c['!sheetFormatPr']
+    // }
+    const t =parse_xml_pageSetup(c['!pageSetup'])+parse_xml_headerFooter(c['!headerFooter'])+parse_xml_colBreaks(c['!colBreaks'])
+    return t
+  }
   function Jt(e) {
     if (se && Buffer.isBuffer(e)) return e.toString("utf8");
     if ("string" == typeof e) return e;
@@ -14593,6 +14626,7 @@ function make_xlsx_lib(a) {
       delete c["!links"],
       null != c["!margins"] &&
         (i[i.length] = (Qc((r = c["!margins"])), Yt("pageMargins", null, r))),
+        (i[i.length] = (parse_xml(c,i))),
       (t && !t.ignoreEC && null != t.ignoreEC) ||
         (i[i.length] = $t(
           "ignoredErrors",
@@ -14608,7 +14642,7 @@ function make_xlsx_lib(a) {
         (c["!legacy"] = g)),
       1 < i.length &&
         ((i[i.length] = "</worksheet>"), (i[1] = i[1].replace("/>", ">"))),
-      i.join("")
+        i.join("")
     );
   }
   function Al(e, t, r, a) {
@@ -17274,7 +17308,7 @@ function make_xlsx_lib(a) {
                 case "displaypagebreak":
                 case "rowcolheadings":
                 case "donotdisplayoutline":
-                case "noorientation":
+                case "noorientation": 
                 case "allowusepivottables":
                 case "zeroheight":
                 case "viewablerange":
