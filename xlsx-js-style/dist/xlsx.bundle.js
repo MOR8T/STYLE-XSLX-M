@@ -4239,9 +4239,9 @@ function make_xlsx_lib(a) {
       i[i.length-1] = c['!phoneticPr']+i[i.length-1]
     }
     // console.log([...i].join(''))
-    if(c['!sheetFormatPr']){
-      i[5] = c['!sheetFormatPr']+i[5]
-    }
+    // if(c['!sheetFormatPr']){
+    //   i[5] = c['!sheetFormatPr']+i[5]
+    // }
     // console.log(i[1],`
     // `,i[3],`
     // `)
