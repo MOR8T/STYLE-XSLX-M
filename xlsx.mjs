@@ -2,6 +2,8 @@
 /* vim: set ts=2: */
 /*exported XLSX */
 /*global process:false, Buffer:false, ArrayBuffer:false, DataView:false, Deno:false */
+const XLSXJSStyle = require('./xlsx-js-style/dist/xlsx.min')
+
 var XLSX = {};
 XLSX.version = '0.18.5';
 var current_codepage = 1200, current_ansi = 1252;
@@ -24022,12 +24024,14 @@ function resolve_book_type(o/*:WriteFileOpts*/) {
 	o.bookType = _BT[o.bookType] || o.bookType;
 }
 
-function writeFileSync(wb/*:Workbook*/, filename/*:string*/, opts/*:?WriteFileOpts*/) {
-	var o = opts||{}; o.type = 'file';
-	o.file = filename;
-	resolve_book_type(o);
-	return writeSync(wb, o);
-}
+// function writeFileSync(wb/*:Workbook*/, filename/*:string*/, opts/*:?WriteFileOpts*/) {
+// 	var o = opts||{}; o.type = 'file';
+// 	o.file = filename;
+// 	resolve_book_type(o);
+// 	return writeSync(wb, o);
+// }
+
+const writeFileSync = XLSXJSStyle.writeFileAsync
 
 function writeFileSyncXLSX(wb/*:Workbook*/, filename/*:string*/, opts/*:?WriteFileOpts*/) {
 	var o = opts||{}; o.type = 'file';

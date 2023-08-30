@@ -1392,7 +1392,7 @@ CRC32.str = crc32_str;
 return CRC32;
 })();
 /* [MS-CFB] v20171201 */
-var CFB = (function _CFB(){
+var CFB = (function _CFB(){///
 var exports = {};
 exports.version = '1.2.1';
 /* [MS-CFB] 2.6.4 */
@@ -14674,7 +14674,6 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 
 	/* 0.1.17 pageSetup mor8t */
 	var pagesetup = data.match(pagesetupregex);
-	console.log(data)
 	if(pagesetup) parse_ws_xml_pageSetup(s, pagesetup);
 
 	/* 0.1.17 colBreacks mor8t */
@@ -24705,7 +24704,7 @@ XLSX.parse_zip = parse_zip;
 XLSX.read = readSync; //xlsread
 XLSX.readFile = readFileSync; //readFile
 XLSX.readFileSync = readFileSync;
-XLSX.write = XLSXJSStyle.writeSync;
+XLSX.write = XLSXJSStyle.write;
 XLSX.writeFile = XLSXJSStyle.writeFile
 XLSX.writeFileSync = XLSXJSStyle.writeFile;
 XLSX.writeFileAsync = XLSXJSStyle.writeFileAsync;
@@ -24719,6 +24718,7 @@ if(typeof require !== "undefined") {
   var strmod = require('stream');
   if((strmod||{}).Readable) set_readable(strmod.Readable);
 }
+console.log(XLSX)
 }
 /*global define */
 if(typeof exports !== 'undefined') make_xlsx_lib(exports);
