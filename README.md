@@ -35,7 +35,7 @@ Install browser:
 ## 🗒 What I added?
 -- When you use read (second property put {type:'file'}) or readFile your file get cells style.
 
-### read or readFile
+### 1. read or readFile
 
 ```js
 // STEP 1 
@@ -61,6 +61,42 @@ XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
 ```
  This example shows how you can change the contents of a file without removing its old style.
 
+### 2. read or readFile
+
+```js
+ // new keys on worksheet
+ const ws = [...]
+ 
+ // #1 default null
+ ws['!pageSetup'] = { 
+   paperSize: "9",
+   scale: "91",
+   fitToWidth: "0",
+   orientation: "landscape"
+ }
+ 
+ // #2 default null
+ ws['!colBreaks'] = { 
+   colBreaks: {
+      count: "22", 
+      manualBreakCount: "22"
+   }
+   brk: [
+      {
+         id: "12", 
+         min: "1", 
+         max: "37", 
+         man: "1"
+      },
+      ...
+   ]
+ }
+
+ // #3 default null
+ ws['!headerFooter'] = {
+   alignWithMargins: "0"
+ }
+```
 
 ## 🗒 Style API
 -- Method to export file in excel with style get from [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style) (only function writeFile)
