@@ -2,6 +2,7 @@
 /* vim: set ts=2: */
 /*exported XLSX */
 /*global process:false, Buffer:false, ArrayBuffer:false, DataView:false, Deno:false */
+import * as XLSXJSStyle from ('./xlsx-js-style/dist/xlsx.min')
 
 var XLSX = {};
 XLSX.version = '0.18.5';
@@ -24030,6 +24031,8 @@ function writeFileSync(wb/*:Workbook*/, filename/*:string*/, opts/*:?WriteFileOp
 	console.log(filename,opts,0)
 	return writeSync(wb, o);
 }
+
+const writeFileSync = XLSXJSStyle.writeFile
 
 function writeFileSyncXLSX(wb/*:Workbook*/, filename/*:string*/, opts/*:?WriteFileOpts*/) {
 	var o = opts||{}; o.type = 'file';
