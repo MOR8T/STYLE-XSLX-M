@@ -24697,13 +24697,13 @@ XLSX.parse_zip = parse_zip;
 XLSX.read = readSync; //xlsread
 XLSX.readFile = readFileSync; //readFile
 XLSX.readFileSync = readFileSync;
-XLSX.write = XLSXJSStyle.writeSync;
-XLSX.writeFile = XLSXJSStyle.writeFile;
-XLSX.writeFileSync = XLSXJSStyle.writeFileSync;
-XLSX.writeFileAsync = XLSXJSStyle.writeFileAsync;
+XLSX.write = writeSync;
+XLSX.writeFile = (a,b,c)=>{console.log(a,b,c);XLSXJSStyle.writeFile(a,b,c)};
+XLSX.writeFileSync = writeFileSync;
+XLSX.writeFileAsync = writeFileAsync;
 XLSX.utils = utils;
 XLSX.writeXLSX = writeSyncXLSX;
-XLSX.writeFileXLSX = XLSXJSStyle.writeFileSyncXLSX;
+XLSX.writeFileXLSX = writeFileSyncXLSX;
 XLSX.SSF = SSF;
 if(typeof __stream !== "undefined") XLSX.stream = __stream;
 if(typeof CFB !== "undefined") XLSX.CFB = CFB;
