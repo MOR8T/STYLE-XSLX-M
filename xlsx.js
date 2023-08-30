@@ -14674,6 +14674,7 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 
 	/* 0.1.17 pageSetup mor8t */
 	var pagesetup = data.match(pagesetupregex);
+	console.log(data)
 	if(pagesetup) parse_ws_xml_pageSetup(s, pagesetup);
 
 	/* 0.1.17 colBreacks mor8t */
