@@ -14669,7 +14669,7 @@ function make_xlsx_lib(a) {
         (c["!legacy"] = g)),
       1 < i.length &&
         ((i[i.length] = '</worksheet>'), (i[1] = i[1].replace("/>", ">"))),
-        (console.log([...i].join(""))),
+        // (console.log([...i].join(""))),
         i.join("")
     );
   }

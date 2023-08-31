@@ -23292,7 +23292,7 @@ function safe_parse_sheet(zip, path, relsPath, sheet, idx, sheetRels, sheets, st
 		sheetRels[sheet]=parse_rels(getzipstr(zip, relsPath, true), path);
 		var data = getzipdata(zip, path);
 		var _ws;
-		console.log(data)
+		// console.log(data)
 		// console.log('safe_parse_sheet')
 		// console.log(stype)
 		switch(stype) {
@@ -23519,7 +23519,7 @@ function parse_zip(zip, opts) {
 		if(dir.vba.length > 0) out.vbaraw = getzipdata(zip,strip_front_slash(dir.vba[0]),true);
 		else if(dir.defaults && dir.defaults.bin === CT_VBA) out.vbaraw = getzipdata(zip, 'xl/vbaProject.bin',true);
 	}
-	// console.log('',JSON.stringify(out))
+	console.log('',JSON.stringify(out))
 	return out;
 }
 
