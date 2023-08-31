@@ -14718,7 +14718,7 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 	if(sheetViews) s['!sheetViews'] = sheetViews[0]
 
 	// /* 0.1.24 worksheet_origional_tag mor8t */
-	console.log(data)
+	// console.log(data)
 	// s['!worksheet'] = data
 	
 	/* 0.1.24 controls mor8t */
