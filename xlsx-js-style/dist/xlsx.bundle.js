@@ -4256,7 +4256,7 @@ function make_xlsx_lib(a) {
   function parse_to_xml(c,i){
     var sheetdataregex = /<(?:\w+:)?sheetData[^>]*>([\s\S]*)<\/(?:\w+:)?sheetData>/;
     var sheetFormatPrregex = /<(?:\w:)?sheetFormatPr[^>]*\/>/g;
-    // console.log(i[4])
+    if(!oldworksheet) return i.join('')
     oldworksheet = oldworksheet.replace(sheetdataregex,i.join('').match(sheetdataregex)[0])
     console.log(oldworksheet)
     return oldworksheet
