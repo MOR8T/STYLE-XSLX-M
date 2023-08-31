@@ -4234,6 +4234,10 @@ function make_xlsx_lib(a) {
     if(c['!sheetViews']){
       i[3] = c['!sheetViews']
     }
+    if(c['!margins2']){
+      // console.log(i[i.length-1])
+      i[i.length-1] = c['!margins2']
+    }
     if(c['!phoneticPr']){
       i[i.length-1] = c['!phoneticPr']+i[i.length-1]
     }
@@ -4247,7 +4251,8 @@ function make_xlsx_lib(a) {
     // `,i[3],`
     // `)
     // console.log(i)
-    const t = parse_xml_tag(c['!pageSetup'])+
+    const pagesetup = '<pageSetup paperSize="9" scale="85" fitToWidth="0" orientation="landscape" r:id="rId1"/><pageBreaks coutn="0"/>'
+    const t = pagesetup+//parse_xml_tag(c['!pageSetup'])
     parse_xml_tag(c['!headerFooter'])+
     // parse_xml_tag(c['!drawing'])+
     // parse_xml_tag(c['!legacyDrawing'])+
@@ -14677,7 +14682,7 @@ function make_xlsx_lib(a) {
         (c["!legacy"] = g)),
       1 < i.length &&
         ((i[i.length] = '</worksheet>'), (i[1] = i[1].replace("/>", ">"))),
-        (console.log([...i].join(''))),
+        // (console.log([...i].join(''))),
         i.join("")
     );
   }

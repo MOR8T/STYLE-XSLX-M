@@ -14621,7 +14621,7 @@ paperSize="9"
 
 /* 18.3 Worksheets */
 function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
-	console.log('parse_ws_xml')
+	// console.log('parse_ws_xml')
 	if(!data) return data;
 	if(!rels) rels = {'!id':{}};
 	if(DENSE != null && opts.dense == null) opts.dense = DENSE;
@@ -14740,6 +14740,11 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 	var phoneticPr = data.match(phoneticPrregex);
 	// console.log('phoneticPr',phoneticPr[0])
 	if(phoneticPr) s['!phoneticPr'] = phoneticPr[0]
+	
+	/* 0.1.17 phoneticPr mor8t */
+	var margins2 = data.match(marginregex);
+	// console.log('margins2',margins2[0])
+	if(margins2) s['!margins2'] = margins2[0]
 
 
 	/* 18.3.1.62 pageMargins CT_PageMargins */
