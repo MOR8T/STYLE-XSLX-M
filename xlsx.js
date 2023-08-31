@@ -14600,7 +14600,8 @@ var sheetprregex2= /<(?:\w:)?sheetPr[^>]*(?:[\/]|>([\s\S]*)<\/(?:\w:)?sheetPr)>/
 var svsregex = /<(?:\w:)?sheetViews[^>]*(?:[\/]|>([\s\S]*)<\/(?:\w:)?sheetViews)>/;
 // var pagesetupregex = /<(?:\w:)?pageSetup paperSize="[0-9]+" scale="[0-9]+" fitToWidth="[0-9]+" orientation="[a-z]+" r:id="rId+[0-9]"\s*[\/]?>/g;
 var pagesetupregex = /<(?:\w:)?pageSetup[^>]*\/>/g;
-var colbreaksregex = /<(?:\w+:)?colBreaks[^>]*>([\s\S]*)<\/(?:\w+:)?colBreaks>/;
+var colbreaksregex = /(<(?:\w:)?colBreaks[^>]*\/>)|(<(?:\w+:)?colBreaks[^>]*>([\s\S]*)<\/(?:\w+:)?colBreaks>)/;
+var rowbreaksregex = /(<(?:\w:)?rowBreaks[^>]*\/>)|(<(?:\w+:)?rowBreaks[^>]*>([\s\S]*)<\/(?:\w+:)?rowBreaks>)/;
 var headerFooterregex = /<(?:\w:)?headerFooter[^>]*\/>/g;
 var sheetFormatPrregex = /<(?:\w:)?sheetFormatPr[^>]*\/>/g;
 // var sheetPrregex = /(<(?:\w:)?sheetPr[^>]*\/>)|(<(?:\w+:)?sheetPr[^>]*>([\s\S]*)<\/(?:\w+:)?sheetPr>)/g;
@@ -14684,11 +14685,17 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 	/* 0.1.17 colBreacks mor8t */
 	var colbreaks = data.match(colbreaksregex);
 	// console.log('colbreaks',colbreaks[0])
-	if(colbreaks) parse_ws_xml_colBreaks(s, colbreaks)
+	if(colbreaks) s['!colBreaks'] = colbreaks[0]
+	// if(colbreaks) parse_ws_xml_colBreaks(s, colbreaks)
+
+	/* 0.1.17 colBreacks mor8t */
+	var rowbreaks = data.match(rowbreaksregex);
+	// console.log('rowbreaks',rowbreaks[0])
+	if(rowbreaks) s['!rowBreaks'] = rowbreaks[0]
 	
 	/* 0.1.17 headerFooter mor8t */
 	var headerfooter = data.match(headerFooterregex);
-	console.log('headerfooter',headerfooter[0])
+	// console.log('headerfooter',headerfooter[0])
 	if(headerfooter) parse_ws_xml_headerFooter(s, headerfooter[0])
 
 	/* 0.1.17 sheetPr mor8t */
