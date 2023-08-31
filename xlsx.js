@@ -14714,9 +14714,8 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 	if(sheetViews) s['!sheetViews'] = sheetViews[0]
 
 	/* 0.1.17 worksheet_origional_tag mor8t */
-	var worksheet = data.match(worksheetregex);
-	// console.log('worksheet',worksheet[0])
-	if(worksheet) s['!worksheet'] = worksheet[0]
+	// console.log(data)
+	s['!worksheet'] = data
 
 	/* 0.1.17 phoneticPr mor8t */
 	var phoneticPr = data.match(phoneticPrregex);
@@ -23519,7 +23518,7 @@ function parse_zip(zip, opts) {
 		if(dir.vba.length > 0) out.vbaraw = getzipdata(zip,strip_front_slash(dir.vba[0]),true);
 		else if(dir.defaults && dir.defaults.bin === CT_VBA) out.vbaraw = getzipdata(zip, 'xl/vbaProject.bin',true);
 	}
-	console.log('',JSON.stringify(out))
+	// console.log('',JSON.stringify(out))
 	return out;
 }
 
