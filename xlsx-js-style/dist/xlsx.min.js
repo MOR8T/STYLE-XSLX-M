@@ -4241,24 +4241,15 @@ function make_xlsx_lib(a) {
     if(c['!phoneticPr']){
       i[i.length-1] = c['!phoneticPr']+i[i.length-1]
     }
-    
-    // console.log([...i].join(''))
     // if(c['!sheetFormatPr']){
     //   i[4] = c['!sheetFormatPr']+i[4]
     //   // console.log(c['!sheetFormatPr'])
     // }
-    // console.log(i[1],`
-    // `,i[3],`
-    // `)
-    // console.log(i)
     // const pagesetup = '<pageSetup paperSize="9" scale="85" fitToWidth="0" orientation="landscape" r:id="rId1"/><pageBreaks coutn="0"/>'
-    const t = parse_xml_tag(c['!pageSetup'])
-    parse_xml_tag(c['!headerFooter'])+
+    const t = parse_xml_tag(c['!pageSetup'])+parse_xml_tag(c['!headerFooter'])+parse_xml_tag(c['!rowBreaks'])+parse_xml_tag(c['!colBreaks'])
     // parse_xml_tag(c['!drawing'])+
     // parse_xml_tag(c['!legacyDrawing'])+
     // parse_xml_tag(c['!controls'])+
-    parse_xml_tag(c['!rowBreaks'])+
-    parse_xml_tag(c['!colBreaks'])
     return t
   }
   function Jt(e) {
@@ -14682,7 +14673,6 @@ function make_xlsx_lib(a) {
         (c["!legacy"] = g)),
       1 < i.length &&
         ((i[i.length] = '</worksheet>'), (i[1] = i[1].replace("/>", ">"))),
-        (console.log([...i].join(''))),
         i.join("")
     );
   }
