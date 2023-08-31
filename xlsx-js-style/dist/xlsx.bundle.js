@@ -4224,7 +4224,6 @@ function make_xlsx_lib(a) {
   //   // return `<colBreaks ${tag.slice(2,tag.length-1)}>${t}</colBreaks>`
   //   return colBreaks
   // }
-  let oldworksheet = ''
   function parse_xml(c,i){
     // if(c['!worksheet']){
     //   i[1] = c['!worksheet']
@@ -4238,9 +4237,6 @@ function make_xlsx_lib(a) {
     if(c['!phoneticPr']){
       i[i.length-1] = c['!phoneticPr']+i[i.length-1]
     }
-    if(c['!worksheet']){
-      oldworksheet = c['!worksheet']
-    }
     
     // console.log([...i].join(''))
     // if(c['!sheetFormatPr']){
@@ -4252,14 +4248,6 @@ function make_xlsx_lib(a) {
     // `)
     const t =parse_xml_tag(c['!pageSetup'])+parse_xml_tag(c['!headerFooter'])+parse_xml_tag(c['!rowBreaks'])+parse_xml_tag(c['!colBreaks'])
     return t
-  }
-  function parse_to_xml(c,i){
-    var sheetdataregex = /<(?:\w+:)?sheetData[^>]*>([\s\S]*)<\/(?:\w+:)?sheetData>/;
-    var sheetFormatPrregex = /<(?:\w:)?sheetFormatPr[^>]*\/>/g;
-    if(!oldworksheet) return i.join('')
-    oldworksheet = oldworksheet.replace(sheetdataregex,i.join('').match(sheetdataregex)[0])
-    console.log(oldworksheet)
-    return oldworksheet
   }
   function Jt(e) {
     if (se && Buffer.isBuffer(e)) return e.toString("utf8");
@@ -14682,8 +14670,8 @@ function make_xlsx_lib(a) {
         (c["!legacy"] = g)),
       1 < i.length &&
         ((i[i.length] = '</worksheet>'), (i[1] = i[1].replace("/>", ">"))),
-        (parse_to_xml(c,i))
-        // i.join("")
+        (console.log([...i].join(""))),
+        i.join("")
     );
   }
   function Al(e, t, r, a) {
