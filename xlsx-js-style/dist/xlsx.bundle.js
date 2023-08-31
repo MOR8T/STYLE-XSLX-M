@@ -4202,29 +4202,28 @@ function make_xlsx_lib(a) {
     }
     return "";
   }
-  function parse_xml_pageSetup(pagesetup){
-    // console.log('------',pagesetup)
-    if(!pagesetup) return ''
-    // let tag = JSON.stringify(pagesetup).replace(/":"/g,'="').replace(/","/g,'" ')
-    // tag = tag.slice(2,tag.length-1)
-    // return `<pageSetup ${tag} />`
-    // console.log('---------------------------------------------------------------==============',pagesetup)
-    return pagesetup
+  // function parse_xml_pageSetup(pagesetup){
+  //   if(!pagesetup) return ''
+  //   // let tag = JSON.stringify(pagesetup).replace(/":"/g,'="').replace(/","/g,'" ')
+  //   // tag = tag.slice(2,tag.length-1)
+  //   // return `<pageSetup ${tag} />`
+  //   return pagesetup
+  // }
+  function parse_xml_tag(tag){
+    if(!tag) return ''
+    return tag
   }
-  function parse_xml_colBreaks(colBreaks){
-    if(!colBreaks) return ''
-    let t = ''
-    colBreaks.brk.map((el) => {
-      let tag = JSON.stringify(el).replace(/":"/g,'="').replace(/","/g,'" ')
-      t+= `<brk ${tag.slice(2,tag.length-1)} />`
-    })
-    let tag = JSON.stringify(colBreaks.colBreaks).replace(/":"/g,'="').replace(/","/g,'" ')
-    return `<colBreaks ${tag.slice(2,tag.length-1)}>${t}</colBreaks>`
-  }
-  function parse_xml_headerFooter(headerfooter){
-    if(!headerfooter) return ''
-    return headerfooter
-  }
+  // function parse_xml_colBreaks(colBreaks){
+  //   if(!colBreaks) return ''
+  //   // let t = ''
+  //   // colBreaks.brk.map((el) => {
+  //   //   let tag = JSON.stringify(el).replace(/":"/g,'="').replace(/","/g,'" ')
+  //   //   t+= `<brk ${tag.slice(2,tag.length-1)} />`
+  //   // })
+  //   // let tag = JSON.stringify(colBreaks.colBreaks).replace(/":"/g,'="').replace(/","/g,'" ')
+  //   // return `<colBreaks ${tag.slice(2,tag.length-1)}>${t}</colBreaks>`
+  //   return colBreaks
+  // }
   function parse_xml(c,i){
     // if(c['!worksheet']){
     //   i[1] = c['!worksheet']
@@ -4240,12 +4239,13 @@ function make_xlsx_lib(a) {
     }
     // console.log([...i].join(''))
     // if(c['!sheetFormatPr']){
-    //   i[5] = c['!sheetFormatPr']+i[5]
+    //   i[4] = c['!sheetFormatPr']+i[4]
+    //   // console.log(c['!sheetFormatPr'])
     // }
     // console.log(i[1],`
     // `,i[3],`
     // `)
-    const t =parse_xml_pageSetup(c['!pageSetup'])+parse_xml_headerFooter(c['!headerFooter'])+parse_xml_colBreaks(c['!colBreaks'])
+    const t =parse_xml_tag(c['!pageSetup'])+parse_xml_tag(c['!headerFooter'])+parse_xml_tag(c['!rowBreaks'])+parse_xml_tag(c['!colBreaks'])
     return t
   }
   function Jt(e) {
