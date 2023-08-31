@@ -14602,14 +14602,17 @@ var svsregex = /<(?:\w:)?sheetViews[^>]*(?:[\/]|>([\s\S]*)<\/(?:\w:)?sheetViews)
 var pagesetupregex = /<(?:\w:)?pageSetup[^>]*\/>/g;
 var colbreaksregex = /(<(?:\w:)?colBreaks[^>]*\/>)|(<(?:\w+:)?colBreaks[^>]*>([\s\S]*)<\/(?:\w+:)?colBreaks>)/;
 var rowbreaksregex = /(<(?:\w:)?rowBreaks[^>]*\/>)|(<(?:\w+:)?rowBreaks[^>]*>([\s\S]*)<\/(?:\w+:)?rowBreaks>)/;
-var headerFooterregex = /<(?:\w:)?headerFooter[^>]*\/>/g;
+var headerFooterregex = /(<(?:\w:)?headerFooter[^>]*\/>)|(<(?:\w+:)?headerFooter[^>]*>([\s\S]*)<\/(?:\w+:)?headerFooter>)/g;
 var sheetFormatPrregex = /<(?:\w:)?sheetFormatPr[^>]*\/>/g;
 // var sheetPrregex = /(<(?:\w:)?sheetPr[^>]*\/>)|(<(?:\w+:)?sheetPr[^>]*>([\s\S]*)<\/(?:\w+:)?sheetPr>)/g;
 var sheetPrregex = /(<(?:\w:)?sheetPr[^>]*\/>)|(<(?:\w+:)?sheetPr[^>]*>([\s\S]*)<\/(?:\w+:)?sheetPr>)/g;
 var pagesetuptagregex = /(\w*="(\d*|\w*\d*|.*)"|r:id="(.*)")/g;
-var sheetViewsregex = /(<(?:\w:)?sheetViews[^>]*\/>)|(<(?:\w+:)?sheetViews[^>]*>([\s\S]*)<\/(?:\w+:)?sheetViews>)/g
+var sheetViewsregex = /(<(?:\w:)?sheetViews[^>]*\/>)|(<(?:\w+:)?sheetViews[^>]*>([\s\S]*)<\/(?:\w+:)?sheetViews>)/g;
 var worksheetregex = /<worksheet [^>]*>/;
 var phoneticPrregex = /<(?:\w:)?phoneticPr[^>]*\/>/g;
+var controlsregex = /(<(?:\w:)?controls[^>]*\/>)|(<(?:\w+:)?controls[^>]*>([\s\S]*)<\/(?:\w+:)?controls>)/g;
+var drawingregex = /(<(?:\w:)?drawing[^>]*\/>)|(<(?:\w+:)?drawing[^>]*>([\s\S]*)<\/(?:\w+:)?drawing>)/g;
+var legacyDrawingregex = /(<(?:\w:)?legacyDrawing[^>]*\/>)|(<(?:\w+:)?legacyDrawing[^>]*>([\s\S]*)<\/(?:\w+:)?legacyDrawing>)/g;
 
 
 paperSize="9"
@@ -14618,7 +14621,7 @@ paperSize="9"
 
 /* 18.3 Worksheets */
 function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
-	// console.log('parse_ws_xml')
+	console.log('parse_ws_xml')
 	if(!data) return data;
 	if(!rels) rels = {'!id':{}};
 	if(DENSE != null && opts.dense == null) opts.dense = DENSE;
@@ -14696,26 +14699,42 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 	/* 0.1.17 headerFooter mor8t */
 	var headerfooter = data.match(headerFooterregex);
 	// console.log('headerfooter',headerfooter[0])
-	if(headerfooter) parse_ws_xml_headerFooter(s, headerfooter[0])
+	if(headerfooter) s['!headerFooter'] = headerfooter[0]
+	// if(headerfooter) parse_ws_xml_headerFooter(s, headerfooter[0])
 
 	/* 0.1.17 sheetPr mor8t */
 	var sheetPr = data.match(sheetPrregex);
 	// console.log('sheetPr',sheetPr[0])
 	if(sheetPr) s['!sheetPr'] = sheetPr[0]
 
-	// /* 0.1.17 sheetFormatPr mor8t */
+	// /* 0.1.18 sheetFormatPr mor8t */
 	var sheetFormatPr = data.match(sheetFormatPrregex);
 	// console.log('sheetFormatPr',sheetFormatPr[0])
 	if(sheetFormatPr) s['!sheetFormatPr'] = sheetFormatPr[0]
 
-	/* 0.1.17 sheetVeiw mor8t */
+	/* 0.1.23 sheetVeiw mor8t */
 	var sheetViews = data.match(sheetViewsregex);
 	// console.log('sheetViews',sheetViews[0])
 	if(sheetViews) s['!sheetViews'] = sheetViews[0]
 
-	/* 0.1.17 worksheet_origional_tag mor8t */
-	// console.log(data)
-	s['!worksheet'] = data
+	// /* 0.1.24 worksheet_origional_tag mor8t */
+	console.log(data)
+	// s['!worksheet'] = data
+	
+	/* 0.1.24 controls mor8t */
+	var drawing = data.match(drawingregex);
+	// console.log('drawing',drawing[0])
+	if(drawing) s['!drawing'] = drawing[0]
+	
+	/* 0.1.24 controls mor8t */
+	var controls = data.match(controlsregex);
+	// console.log('controls',controls[0])
+	if(controls) s['!controls'] = controls[0]
+	
+	/* 0.1.24 controls mor8t */
+	var legacyDrawing = data.match(legacyDrawingregex);
+	// console.log('legacyDrawing',legacyDrawing[0])
+	if(legacyDrawing) s['!legacyDrawing'] = legacyDrawing[0]
 
 	/* 0.1.17 phoneticPr mor8t */
 	var phoneticPr = data.match(phoneticPrregex);
@@ -23518,7 +23537,7 @@ function parse_zip(zip, opts) {
 		if(dir.vba.length > 0) out.vbaraw = getzipdata(zip,strip_front_slash(dir.vba[0]),true);
 		else if(dir.defaults && dir.defaults.bin === CT_VBA) out.vbaraw = getzipdata(zip, 'xl/vbaProject.bin',true);
 	}
-	// console.log('',JSON.stringify(out))
+	// console.log('',JSON.stringify(sheets))
 	return out;
 }
 
