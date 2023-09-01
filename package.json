@@ -1,8 +1,8 @@
 {
 	"name": "style-xlsx-m",
-	"version": "0.1.25.5",
+	"version": "0.1.25.6",
 	"author": "mor8t (Shukurov Shahrom)",
-	"description": "style-xlsx-m is a custom xlsx and xlsx-js-style version library",
+	"description": "style-xlsx-m is a custom xlsx and xlsx-js-style versions library",
 	"keywords": [
 		"excel",
 		"xls",

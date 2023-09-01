@@ -33,9 +33,9 @@ Install browser:
 
 
 ## 🗒 What I added?
--- When you use read (second property put {type:'file'}) or readFile your file get cells style.
 
 ### 1. read or readFile
+-- When you use read (second property put {type:'file'}) or readFile your file get cells style.
 
 ```js
 // STEP 1 
@@ -60,22 +60,25 @@ XLSX.utils.book_append_sheet(workbook, worksheet, false, false, sheetname);
 XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
 ```
  This example shows how you can change the contents of a file without removing its old style.
+ (But you can't get style in xls format becouse this format don't use xml)
 
-<!-- ### 2. read or readFile
+
+### 2. PageSetup
 
 ```js
- // new keys on worksheet
- const ws = [...]
+ const worksheet = [...]
  
- // #1 default null
- ws['!pageSetup'] = { 
-   paperSize: "9",
-   scale: "91",
-   fitToWidth: "0",
-   orientation: "landscape"
+ // default null
+ worksheet['!pageSetup'] = { 
+   paperSize: "9", // "9" for format A4
+   scale: "91", // 1 - 100%
+   fitToWidth: "0", // "0" || "1"
+   orientation: "landscape" // "landscape" || "portrait"
  }
- 
- // #2 default null
+```
+ it can be used to print in desired format
+
+ <!-- // #2 default null
  ws['!colBreaks'] = { 
    colBreaks: {
       count: "22", 
@@ -95,8 +98,7 @@ XLSX.writeFile(wb, "style-xlsx-m-example.xlsm");
  // #3 default null
  ws['!headerFooter'] = {
    alignWithMargins: "0"
- }
-``` -->
+ } -->
 
 ## 🗒 Style API
 -- Method to export file in excel with style get from [xlsx-js-style](https://www.npmjs.com/package/xlsx-js-style) (only function writeFile)
