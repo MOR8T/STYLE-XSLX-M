@@ -1,5 +1,4 @@
 # style-xlsx-m
-# Now it's a beta version!
 <!-- # Now i test library pleas wait to evening (finished in 8/30/2022 10:00 pm) -->
 ## ℹ️ About
 
