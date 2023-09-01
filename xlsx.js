@@ -14568,7 +14568,7 @@ function safe_format(p, fmtid, fillid, opts, themes, styles, fontid, borderid,cf
         if (p.s.name) p.s.font = { ...p.s.font, name: p.s.name, };
 	}
 	if(borderid != null) p.s.border = styles.Borders[borderid]
-	if(cf.alignment) p.s = {...p.s, alignment:cf.alignment}
+	if(cf != null && cf?.alignment) p.s = {...p.s, alignment:cf.alignment}
 	if(p.s && p.t == 'z'){
 		p.t = 's';
 		// p.z = 'General'
@@ -14663,8 +14663,9 @@ function parse_ws_xml(data, opts, idx, rels, wb, themes, styles) {
 
 	/* 18.3.1.80 sheetData CT_SheetData ? */
 	// console.log('mtch',mtch[1],'s',s)
+	// console.log('+++++++++++++++++++++++++++')
 	if(mtch) parse_ws_xml_data(mtch[1], s, opts, refguess, themes, styles);
-
+	
 	/* 18.3.1.2  autoFilter CT_AutoFilter */
 	var afilter = data2.match(afregex);
 	if(afilter) s['!autofilter'] = parse_ws_xml_autofilter(afilter[0]);
@@ -15051,7 +15052,9 @@ return function parse_ws_xml_data(sdata, s, opts, guess, themes, styles) {
 		x = marr[mt].trim();
 		var xlen = x.length;
 		if(xlen === 0) continue;
+		// console.log('-------------',mt,marr.length)
 
+		// console.log(mt, marr.length)
 		/* 18.3.1.73 row CT_Row */
 		var rstarti = 0;
 		outa: for(ri = 0; ri < xlen; ++ri) switch(/*x.charCodeAt(ri)*/x[ri]) {
@@ -15193,10 +15196,10 @@ return function parse_ws_xml_data(sdata, s, opts, guess, themes, styles) {
 			// console.log('p',p)
 			/* formatting */
 			fmtid = fillid = 0;
-			cf = null;
+			cf = {};
 			if(do_format && tag.s !== undefined) {
 				cf = styles.CellXf[tag.s];
-				if(cf != null) {
+				if(Object.keys(cf).length != 0) {
 					if(cf.numFmtId != null){ 
 						fmtid = cf.numFmtId;
 					}
@@ -15213,7 +15216,6 @@ return function parse_ws_xml_data(sdata, s, opts, guess, themes, styles) {
 					}
 				}
 			}
-			// console.log('do_format',do_format,'tag',tag,'cf',cf,'fillid',fillid,'fmtid',fmtid)
 			safe_format(p, fmtid, fillid, opts, themes, styles, fontid, borderid,cf);
 			if(opts.cellDates && do_format && p.t == 'n' && fmt_is_date(table_fmt[fmtid])) { p.t = 'd'; p.v = numdate(p.v); }
 			if(tag.cm && opts.xlmeta) {
