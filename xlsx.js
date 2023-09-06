@@ -24215,6 +24215,7 @@ function make_json_row(sheet, r, R, cols, header, hdr, dense, o) {
 	var defval = o.defval, raw = o.raw || !Object.prototype.hasOwnProperty.call(o, "raw");
 	var isempty = true;
 	var row = (header === 1) ? [] : {};
+	var styles = [], stylesi = 0;
 	if(header !== 1) {
 		if(Object.defineProperty) try { Object.defineProperty(row, '__rowNum__', {value:R, enumerable:false}); } catch(e) { row.__rowNum__ = R; }
 		else row.__rowNum__ = R;
@@ -24227,11 +24228,17 @@ function make_json_row(sheet, r, R, cols, header, hdr, dense, o) {
 			continue;
 		}
 		var v = val.v;
+		// console.log('--------',val)
 		switch(val.t){
 			case 'z': if(v == null) break; continue;
 			case 'e': v = (v == 0 ? null : void 0); break;
 			case 's': case 'd': case 'b': case 'n': break;
 			default: throw new Error('unrecognized type ' + val.t);
+		}
+		switch(val.s){
+			case null : styles[stylesi++] = {}; break;
+			case undefined : styles[stylesi++] = {}; break;
+			default: styles[stylesi++] = val.s; break;
 		}
 		if(hdr[C] != null) {
 			if(v == null) {
@@ -24245,7 +24252,7 @@ function make_json_row(sheet, r, R, cols, header, hdr, dense, o) {
 			if(v != null) isempty = false;
 		}
 	}
-	return { row: row, isempty: isempty };
+	return { row: row, isempty: isempty, styles: styles };
 }
 
 
@@ -24267,9 +24274,10 @@ function sheet_to_json(sheet, opts) {
 	if(header > 0) offset = 0;
 	var rr = encode_row(r.s.r);
 	var cols = [];
-	var out = [];
-	var outi = 0, counter = 0;
+	var out = [], styles = [];
+	var outi = 0, counter = 0, stylesi = 0;
 	var dense = Array.isArray(sheet);
+	// console.log('dense',dense)
 	var R = r.s.r, C = 0;
 	var header_cnt = {};
 	if(dense && !sheet[R]) sheet[R] = [];
@@ -24299,8 +24307,12 @@ function sheet_to_json(sheet, opts) {
 		if ((rowinfo[R]||{}).hidden) continue;
 		var row = make_json_row(sheet, r, R, cols, header, hdr, dense, o);
 		if((row.isempty === false) || (header === 1 ? o.blankrows !== false : !!o.blankrows)) out[outi++] = row.row;
+		if((row.isempty === false) || (header === 1 ? o.blankrows !== false : !!o.blankrows)) styles[stylesi++] = row.styles;
 	}
 	out.length = outi;
+	if(opts.getCellStyles){
+		return {out, styles:styles}
+	}
 	return out;
 }
 

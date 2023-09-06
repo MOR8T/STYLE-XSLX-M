@@ -725,6 +725,9 @@ export interface Sheet2JSONOpts extends DateNFOption {
 
     /** if true, return raw numbers; if false, return formatted numbers */
     rawNumbers?: boolean;
+
+    /**if true return {out, styles} out this aoa and new key styles */
+    getCellStyles?: boolean;
 }
 
 export interface AOA2SheetOpts extends CommonOptions, DateNFOption {
