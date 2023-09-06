@@ -25786,6 +25786,7 @@ function make_xlsx_lib(a) {
         (d[p++] = T.row, styles[stylesi++] = T.styles);
 
     (d.length = p)
+    console.log(d, styles, stylesi, t)
     if (t.getCellStyles) {
       return { out:d, styles: styles };
     }
