@@ -24228,12 +24228,11 @@ function make_json_row(sheet, r, R, cols, header, hdr, dense, o) {
 			continue;
 		}
 		var v = val.v;
-		// console.log('--------',val)
 		switch(val.t){
 			case 'z': if(v == null) break; continue;
 			case 'e': v = (v == 0 ? null : void 0); break;
-			case 's': case 'd': case 'b': case 'n': break;
-			default: throw new Error('unrecognized type ' + val.t);
+			case 's':break; case 'd':break; case 'b':break; case 'n':break;
+			// default: throw new Error('unrecognized type ' + val.t);
 		}
 		switch(val.s){
 			case null : styles[stylesi++] = {}; break;

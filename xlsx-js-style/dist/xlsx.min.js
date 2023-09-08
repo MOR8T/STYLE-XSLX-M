@@ -25676,13 +25676,13 @@ function make_xlsx_lib(a) {
             case "e":
               m = 0 == m ? null : void 0;
               break;
-            case "s":
-            case "d":
-            case "b":
+            case "s": break;
+            case "d": break;
+            case "b": break;
             case "n":
               break;
             default:
-              throw new Error("unrecognized type " + p.t);
+              // throw new Error("unrecognized type " + p.t);
           }
           switch(p.s){
             case null : styles[stylesi++] = {}; break;
